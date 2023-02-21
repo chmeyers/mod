@@ -1,0 +1,7 @@
+﻿l_english:
+leader_enhancement_custom_genesculpting:0 "Custom Genesculpting"
+leader_enhancement_custom_genesculpting_name:0 "Custom Genesculpting"
+leader_enhancement_custom_genesculpting_desc:0 "Leaders will undergo custom genetic modification to provide the optimal genetic traits. If this policy is removed, existing leaders will revert to the main traits for their species."
+
+edict_gene_micromanager:0 "Genetic Micromanager"
+edict_gene_micromanager_desc:0 "Pops will be automatically modified to optimize them for the job that they are working while respecting the maximum trait limits and researched tech limitations. Each pop will be evaluated approximately once per decade. Habitability will be changed to match the planet on which they live if glandular acclimation has been researched and it would improve their habitability. Certain rare habitablity traits such as Tomb, Relic, and Ring World habitability will not be automatically removed. Traits from other ascension paths, such as Psionic, will not be touched."

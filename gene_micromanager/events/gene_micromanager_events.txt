@@ -1,0 +1,153 @@
+namespace = gene_micromanager_mod
+
+# Edict Enabled
+country_event = {
+	id = gene_micromanager_mod.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		# Called the first time when the edict is enabled, but we have to check for disablement
+		has_edict = gene_micromanager
+	}
+}
+
+# Leader Policy First Enabled or Leader Assigned.
+country_event = {
+	id = gene_micromanager_mod.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_policy_flag = leader_enhancement_custom_genesculpting
+	}
+
+	immediate = {
+		every_owned_leader = {
+			limit = {
+				NOT = { has_leader_flag = genemod_sculpted }
+				species = {
+					is_robotic = no
+					NOT = { has_trait = trait_mechanical }
+				}
+			}
+			set_leader_flag = genemod_sculpted
+			if = {
+				limit = { species = { NOT = { has_trait = trait_erudite } } }
+				modify_species = {
+					add_trait = trait_erudite # Cost 4
+				}
+				modify_species = {
+					add_trait = trait_robust # Cost 4
+				}
+				modify_species = {
+					add_trait = trait_venerable # Cost 4
+				}
+				modify_species = {
+					add_trait = trait_quick_learners # Cost 1
+				}
+				modify_species = {
+					add_trait = trait_talented # Cost 1
+				}
+				#traits_exotic_metabolism would add 50 age, too, but requires the toxoids pack.
+			}
+			
+		}
+	}
+}
+
+# Leader Policy Disabled
+country_event = {
+	id = gene_micromanager_mod.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { has_policy_flag = leader_enhancement_custom_genesculpting }
+	}
+
+	immediate = {
+		every_owned_leader = {
+			limit = { has_leader_flag = genemod_sculpted }
+			save_event_target_as = genmod_sculpt_undo
+			owner = {
+				if = {
+					limit = {
+						any_owned_species = {
+							is_same_species = event_target:genmod_sculpt_undo.species
+							has_trait = trait_erudite
+						}
+					}
+					# They own a matching species with erudite, use that one.
+					random_owned_species = {
+						limit = {
+							is_same_species = event_target:genmod_sculpt_undo.species
+							has_trait = trait_erudite
+						}
+						event_target:genmod_sculpt_undo = {
+							change_species = prev
+							remove_leader_flag = genemod_sculpted
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						any_owned_species = {
+							is_same_species = prevprev.species
+						}
+					}
+					# Take whatever.
+					event_target:genmod_sculpt_undo = {
+						change_species = prev
+						remove_leader_flag = genemod_sculpted
+					}
+				}
+				# Else: They don't own any pops of the leader's species.
+				# What luck. They will stay as they are.
+			}
+			
+		}
+		# Same thing with the pool leaders
+		every_pool_leader = {
+			limit = { has_leader_flag = genemod_sculpted }
+			save_event_target_as = genmod_sculpt_undo
+			owner = {
+				if = {
+					limit = {
+						any_owned_species = {
+							is_same_species = event_target:genmod_sculpt_undo.species
+							has_trait = trait_erudite
+						}
+					}
+					# They own a matching species with erudite, use that one.
+					random_owned_species = {
+						limit = {
+							is_same_species = event_target:genmod_sculpt_undo.species
+							has_trait = trait_erudite
+						}
+						event_target:genmod_sculpt_undo = {
+							change_species = prev
+							remove_leader_flag = genemod_sculpted
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						any_owned_species = {
+							is_same_species = prevprev.species
+						}
+					}
+					# Take whatever.
+					event_target:genmod_sculpt_undo = {
+						change_species = prev
+						remove_leader_flag = genemod_sculpted
+					}
+				}
+				# Else: They don't own any pops of the leader's species.
+				# What luck. They will stay as they are.
+			}
+			
+		}
+	}
+	
+}

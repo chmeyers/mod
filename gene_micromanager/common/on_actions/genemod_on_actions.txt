@@ -1,0 +1,7 @@
+on_leader_spawned = {
+	events = {
+		# Take care of newly spawned leaders
+		# The event's trigger will check whether the policy is enabled.
+		gene_micromanager_mod.2
+	}
+}
