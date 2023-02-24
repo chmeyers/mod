@@ -11,10 +11,6 @@ gene_micromanager = {
 		}
 	}
 
-	modifier = {
-		terraform_speed_mult = 0.50
-	}
-
 	potential = {
 		OR = {
 			has_active_tradition = tr_genetics_finish
@@ -22,12 +18,8 @@ gene_micromanager = {
 		}
 	}
 
-	effect = {
-		# Kick it off for the first time.
-		# The event loop will check that has_edict = gene_micromanager
-		# and disable itself if the edict is turned off.
-		country_event = { id = gene_micromanager_mod.1 }
-	}
+	# No effects listed here because the monthly pulse on_action will
+	# check that the edict is active and trigger the event.
 
 	allow = {}
 

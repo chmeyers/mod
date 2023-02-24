@@ -13,3 +13,9 @@ on_modification_complete = {
 		gene_micromanager_mod.2
 	}
 }
+
+on_monthly_pulse_country = {
+	events = {
+		gene_micromanager_mod.1 # Run Gene Micromanager if the edict is active
+	}
+}

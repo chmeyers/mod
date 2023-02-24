@@ -56,6 +56,17 @@ gene_micromanage_remove_traits = {
 		remove_trait = trait_conservational
 		remove_trait = trait_wasteful
 	}
+	# Probably a bug on their side, but you can get the good enigmatic intelligence
+	# trait with Erudite only if you were already erudite when it was initially added.
+	# In that edge case, we don't remove Erudite.
+	if = {
+		limit = { NOT = { pop_has_trait = trait_enigmatic_intelligence } }
+		modify_species = {
+			species = this
+			change_scoped_species = yes
+			remove_trait = trait_erudite
+		}
+	}
 	# These have additional requirements
 	if = {
 		limit = {
@@ -115,9 +126,10 @@ gene_micromanage_reset_habitability =  {
 			NOT = { home_planet = { is_planet_class = pc_relic } }
 			NOT = { home_planet = { is_planet_class = pc_machine } }
 			NOT = { home_planet = { is_planet_class = pc_hive } }
-			exists = home_planet
+			NOT = { species = { is_half_species = any } }
+			species = { exists = home_planet }
 		}
-		home_planet = { save_event_target_as = current_home_planet }
+		species = { home_planet = { save_event_target_as = current_home_planet } }
 		modify_species = {
 			species = this
 			change_scoped_species = yes
@@ -129,6 +141,18 @@ gene_micromanage_reset_habitability =  {
 # Set their habitability
 gene_micromanage_habitability =  {
 	if = {
+		# The aquatic trait requires ocean preference.
+		limit = {
+			pop_has_trait = trait_aquatic
+			NOT = { pop_has_trait = trait_pc_ocean_preference }
+		}
+		modify_species = {
+			species = this
+			change_scoped_species = yes
+			ideal_planet_class = pc_ocean
+		}
+	}
+	else_if = {
 		limit = {
 			owner = { has_technology = tech_glandular_acclimation }
 			NOT = { pop_has_trait = trait_pc_nuked_preference }
@@ -150,6 +174,7 @@ gene_micromanage_habitability =  {
 			ideal_planet_class = event_target:current_planet
 		}
 	}
+	
 }
 
 gene_micromanage_add_negatives = {
@@ -247,6 +272,7 @@ gene_micromanage_add_negatives = {
 				limit = {
 					check_variable = { which = available_trait_points value < $WANT$ }
 					NOT = { pop_has_trait = trait_solitary }
+					NOT = { pop_has_trait = trait_nerve_stapled }
 				}
 				modify_species = {
 					species = this
@@ -327,6 +353,12 @@ gene_micromanage_add_traits = {
 	if = {
 		limit = {
 			host_has_dlc = "Aquatics Species Pack"
+			NOT = { pop_has_trait = trait_pc_nuked_preference }
+			NOT = { pop_has_trait = trait_pc_habitat_preference }
+			OR = {
+				owner = { has_technology = tech_glandular_acclimation }
+				pop_has_trait = trait_pc_ocean_preference
+			}
 			OR = {
 				planet = { is_planet_class = pc_ocean }
 				planet = { has_modifier = flooded_habitat }
@@ -358,44 +390,288 @@ gene_micromanage_add_traits = {
 		}
 	}
 
-	# research_(all/some?)   trait_erudite (trait_elevated_synapses, trait_artificial_intelligence) (trait_natural_sociologists/physicists/engineers) 4 + (2 + 1) + (1)
+	# research_(all/some?)   trait_erudite (trait_elevated_synapses, trait_artificial_intelligence)
+	# (trait_natural_sociologists/physicists/engineers) 4 + (2 + 1) + (1)
+	if = {
+		limit = {
+			# Proles/Livestock and produce research in a few worker jobs,
+			# but they aren't allowed any of these traits.
+			NOT = { pop_has_trait = trait_syncretic_proles }
+			NOT = { pop_has_trait = trait_presapient_docile_livestock }
+			NOT = { pop_has_trait = trait_nerve_stapled }
+			OR = {
+				pop_produces_resource = { type = society_research amount > 0}
+				pop_produces_resource = { type = engineering_research amount > 0}
+				pop_produces_resource = { type = physics_research amount > 0}
+			}
+		}
+		# We give the cheap one-type trait first, in a set order. Not necessarily ideal,
+		# but it makes the logic simpler, and we shouldn't be point limited for researchers.
+		if = {
+			limit = { pop_produces_resource = { type = society_research amount > 0} }
+			gene_micromanage_try_add = { TRAIT = trait_natural_sociologists COST = 1 }
+		}
+		else_if = {
+			limit = { pop_produces_resource = { type = engineering_research amount > 0} }
+			gene_micromanage_try_add = { TRAIT = trait_natural_engineers COST = 1 }
+		}
+		else_if = {
+			limit = { pop_produces_resource = { type = physics_research amount > 0} }
+			gene_micromanage_try_add = { TRAIT = trait_natural_physicists COST = 1 }
+		}
+		
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			gene_micromanage_try_add = { TRAIT = trait_elevated_synapses COST = 2 }
+			gene_micromanage_try_add = { TRAIT = trait_artificial_intelligence COST = 1 }
+		}
+		if = {
+			# Erudite is allowed for the two bad enigmatic cache traits, but not the good one.
+			limit = { NOT = { pop_has_trait = trait_enigmatic_intelligence } }
+			gene_micromanage_try_add = { TRAIT = trait_erudite COST = 4 }
+		}
+		if = {
+			limit = { NOT = { pop_has_trait = trait_erudite } }
+			limit = { NOT = { pop_has_trait = trait_enigmatic_intelligence_failed } }
+			limit = { NOT = { pop_has_trait = trait_enigmatic_intelligence_poor } }
+			# They'll generally only end up with intelligent if they couldn't get erudite.
+			gene_micromanage_try_add = { TRAIT = trait_intelligent COST = 2 }
+		}
+	}
+
 	# unity   trait_traditional (trait_expressed_tradition) 1 + (1)
-	# alloys   trait_natural_machinist   2
-	# consumer_goods   trait_natural_machinist   2
+	if = {
+		limit = { pop_produces_resource = { type = unity amount > 0} }
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			gene_micromanage_try_add = { TRAIT = trait_expressed_tradition COST = 1 }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_traditional COST = 1 }
+	}
+	# alloys|consumer_goods   trait_natural_machinist   2
+	if = {
+		limit = {
+			OR = {
+				pop_produces_resource = { type = alloys amount > 0}
+				pop_produces_resource = { type = consumer_goods amount > 0}
+			}
+		}
+		gene_micromanage_try_add = { TRAIT = trait_natural_machinist COST = 2 }
+	}
+
 	# minerals   trait_industrious  (trait_crack_miner) 2 + (1)
+	if = {
+		limit = { pop_produces_resource = { type = minerals amount > 0} }
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			gene_micromanage_try_add = { TRAIT = trait_crack_miner COST = 1 }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_industrious COST = 2 }
+	}
 	# energy   trait_ingenious  (trait_technical_skill) 2 + (1)
+	if = {
+		limit = { pop_produces_resource = { type = energy amount > 0} }
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			gene_micromanage_try_add = { TRAIT = trait_technical_skill COST = 1 }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_ingenious COST = 2 }
+	}
 	# food   trait_agrarian  (trait_farm_hands) 2 + (1)
+	if = {
+		limit = { pop_produces_resource = { type = food amount > 0} }
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			gene_micromanage_try_add = { TRAIT = trait_farm_hands COST = 1 }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_agrarian COST = 2 }
+	}
 	# trade_value   trait_thrifty   2
+	if = {
+		limit = { pop_job_produces_trade = yes }
+		gene_micromanage_try_add = { TRAIT = trait_thrifty COST = 2 }
+	}
 	# amenities   trait_charismatic (trait_crafted_smiles) 2 + (1)
+	if = {
+		limit = { pop_job_produces_amenities = yes }
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			gene_micromanage_try_add = { TRAIT = trait_crafted_smiles COST = 1 }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_charismatic COST = 2 }
+	}
 
 	# worker    trait_very_strong (trait_juiced_power) 3 + (1)
-	# slave worker    trait_nerve_stapled  3
-	# all_job    trait_robust (trait_excessive_endurance) 4 + (3)
-	# growth    trait_fertile/trait_rapid_breeders trait_nomadic (trait_preplanned_growth, trait_incubator)  4/2 + 1 + (2)
-	# other    trait_docile trait_conservationist (trait_low_maintenance)  2 + 1 + (1)
+	if = {
+		limit = { has_job_category = worker }
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			gene_micromanage_try_add = { TRAIT = trait_juiced_power COST = 1 }
+		}
+	}
+	# Excessive Endurance is strictly better than Very Strong, so we give it first.
+	# all_job    (trait_excessive_endurance) (3)
+	if = {
+		limit = {
+			owner = { has_origin = origin_overtuned }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_excessive_endurance COST = 3 }
+	}
+	# worker    trait_very_strong|strong 3|1
+	if = {
+		limit = { has_job_category = worker }
+		gene_micromanage_try_add = { TRAIT = trait_very_strong COST = 3 }
+		if = {
+			limit = { NOT = { pop_has_trait = trait_very_strong } }
+			gene_micromanage_try_add = { TRAIT = trait_strong COST = 1 }
+		}
+	}
+
+	# slave worker/livestock    trait_nerve_stapled  3
+	if = {
+		limit = {
+			has_citizenship_type = { type = citizenship_slavery }
+			OR = {
+				has_slavery_type = { type = slavery_livestock }
+				has_slavery_type = { type = slavery_matrix }
+				has_job_category = worker
+			}
+			NOT = { pop_has_trait = trait_erudite }
+			NOT = { pop_has_trait = trait_intelligent }
+			NOT = { pop_has_trait = trait_enigmatic_intelligence }
+			NOT = { pop_has_trait = trait_zombie }
+			NOT = { pop_has_trait = trait_natural_engineers }
+			NOT = { pop_has_trait = trait_natural_physicists }
+			NOT = { pop_has_trait = trait_natural_sociologists }
+			NOT = { pop_has_trait = trait_solitary }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_nerve_stapled COST = 3 }
+		# Check that we didn't add solitary when added this as they are incompatible.
+		if = {
+			limit = {
+				pop_has_trait = trait_solitary
+				pop_has_trait = trait_nerve_stapled
+			}
+			# Remove both of them add add the points back.
+			# Solitary is the last negative we are willing to add, so this means we can't
+			# afford nerve stapled any other way. We may have added other negatives too,
+			# but we don't care as in this situation we have exactly two points left and
+			# at least two picks.
+			modify_species = {
+				species = this
+				change_scoped_species = yes
+				remove_trait = trait_solitary
+				remove_trait = trait_nerve_stapled
+			}
+			change_variable = { which = available_trait_points value = 2 }
+			change_variable = { which = available_trait_picks value = 2 }
+		}
+	}
+
+	# all_job    trait_robust 4
+	# Since Robust is so expensive there are situations where it isn't actually the best choice here
+	# if we don't need the habitability boost that comes with it, but it's never a bad choice, especially
+	# since it will be another ten years before this pop gets modded again and they may have to change
+	# jobs in the meantime.
+	if = {
+		limit = { is_lithoid = no }
+		gene_micromanage_try_add = { TRAIT = trait_robust COST = 4 }
+	}
+
+	# Extra traits to use up the rest of our points.
+	# growth    trait_fertile/trait_rapid_breeders trait_nomadic
+	# (trait_preplanned_growth, trait_incubator)  4/2 + 1 + (2, 2)
+	# Incubators only makes sense when the planet population is < 25, we are even more conservative than that.
+	if = {
+		limit = {
+			host_has_dlc = "Toxoids Species Pack"
+			planet = { num_pops <= 20 }
+			NOT = { pop_has_trait = trait_plantoid_budding }
+			NOT = { pop_has_trait = trait_lithoid_budding }
+			NOT = { pop_has_trait = trait_advanced_budding }
+			NOT = { pop_has_trait = trait_rapid_breeders_lithoid }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_incubator COST = 2 }
+	}
+	if = {
+		limit = {
+			owner = { has_origin = origin_overtuned }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_preplanned_growth COST = 2 }
+	}
+	if = {
+		limit = {
+			is_lithoid = no
+			NOT = { pop_has_trait = trait_incubator }
+			NOT = { pop_has_trait = trait_vat_grown }
+			NOT = { pop_has_trait = trait_tiyanki }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_fertile COST = 4 }
+	}
+	if = {
+		limit = {
+			is_lithoid = no
+			NOT = { pop_has_trait = trait_incubator }
+			NOT = { pop_has_trait = trait_vat_grown }
+			NOT = { pop_has_trait = trait_tiyanki }
+			NOT = { pop_has_trait = trait_fertile }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_rapid_breeders COST = 2 }
+	}
+	gene_micromanage_try_add = { TRAIT = trait_nomadic COST = 1 }
+	# other    trait_docile trait_conservational (trait_low_maintenance)  2 + 1 + (1)
+	if = {
+		limit = {
+			owner = { has_origin = origin_overtuned }
+		}
+		gene_micromanage_try_add = { TRAIT = trait_low_maintenance COST = 1 }
+	}
+	gene_micromanage_try_add = { TRAIT = trait_docile COST = 2 }
+	gene_micromanage_try_add = { TRAIT = trait_conservational COST = 1 }
+	gene_micromanage_try_add = { TRAIT = trait_resilient COST = 1 }
 }
 
 # Count the number of trait points and picks available for this pop and
 # save them to variables.
 gene_micromanage_count_traits = {
-	# 2 + BIOLOGICAL_species_trait_points_add + 1 if half_species
-	export_modifier_to_variable = {
-		modifier = BIOLOGICAL_species_trait_points_add
-		variable = available_trait_points
+	# The modifiers are in the country scope, so grab them from there and
+	# copy the variables to the pop scope.
+	owner = {
+		export_modifier_to_variable = {
+			modifier = BIOLOGICAL_species_trait_points_add
+			variable = genemod_available_trait_points
+		}
+		export_modifier_to_variable = {
+			modifier = BIOLOGICAL_species_trait_picks_add
+			variable = genemod_available_trait_picks
+		}
 	}
+	set_variable = { which = available_trait_points value = owner.genemod_available_trait_points }
+	# 2 + BIOLOGICAL_species_trait_points_add + 1 if half_species
 	change_variable = { which = available_trait_points value = 2 }
 	# 5 + BIOLOGICAL_species_trait_picks_add + 1 if half_species
-	export_modifier_to_variable = {
-		modifier = BIOLOGICAL_species_trait_picks_add
-		variable = available_trait_picks
-	}
+	set_variable = { which = available_trait_picks value = owner.genemod_available_trait_picks }
 	change_variable = { which = available_trait_picks value = 5 }
 	if = {
 		limit = { species = { is_half_species = any } }
 		change_variable = { which = available_trait_points value = 1 }
 		change_variable = { which = available_trait_picks value = 1 }
 	}
-	# TODO(chmeyers): Remove the ones already being used!
+	# Remove the ones already being used.
 	subtract_variable = { which = available_trait_points value = trigger:num_trait_points }
 	# zero-cost traits don't count against trait picks, but there doesn't seem to be a way to
 	# count them without having a hardcoded list of all the traits, so instead I'm assuming that
@@ -405,6 +681,13 @@ gene_micromanage_count_traits = {
 	divide_variable = { which = used_trait_picks value = 2 }
 	ceiling_variable = used_trait_picks
 	subtract_variable = { which = available_trait_picks value = used_trait_picks }
+
+	# Deal with the edge case where we couldn't remove erudite, it's a 4 point pick so
+	# we will have miscounted it above.
+	if = {
+		limit = { pop_has_trait = trait_erudite }
+		change_variable = { which = available_trait_picks value = 1 }
+	}
 }
 
 # Effect to micromanage the genes of the scoped pop

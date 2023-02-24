@@ -5,7 +5,7 @@ genemod_num_organic_pops = {
 		trigger = count_owned_pop
 		parameters = {
 			limit = {
-				is_robotic = no
+				species = { is_robotic = no }
 			}
 		}
 		mode = add
@@ -20,6 +20,13 @@ genemod_num_organic_pops = {
 # overcharging if we just change a couple points worth.
 edict_organic_pop_size_effect = {
 	base = 0.83 # 100 cost / 120 months
-	mult = trigger:genemod_num_organic_pops
+	mult = value:genemod_num_organic_pops
+}
+
+micromanager_pops_per_month = {
+	base = 0
+	add = value:genemod_num_organic_pops
+	divide = 120
+	ceiling = yes
 }
 

@@ -4,4 +4,4 @@ tags={
 	"Economy"
 }
 name="Genemod Micromanager"
-supported_version="3.6.1"
+supported_version="3.6.*"

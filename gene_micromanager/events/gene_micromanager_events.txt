@@ -7,16 +7,13 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		# Called the first time when the edict is enabled, but we have to check for disablement
+		# Called by the monthly pulse, but have to make sure the edict is active.
 		has_edict = gene_micromanager
 	}
 
 	immediate = {
-		export_trigger_value_to_variable = { trigger = genemod_num_organic_pops variable = num_pops_to_alter }
-		divide_variable = { which = num_pops_to_alter value = 120 }
-		ceiling_variable = num_pops_to_alter
 		while = {
-			count = num_pops_to_alter
+			count = value:micromanager_pops_per_month
 			random_owned_pop = {
 				limit = {
 					NOT = { has_pop_flag = gene_micromanaged }
@@ -38,9 +35,6 @@ country_event = {
 				remove_pop_flag = gene_micromanaged
 			}
 		}
-
-		# Loop back to do the next pop.
-		country_event = { id = gene_micromanager_mod.1 days = 30 }
 	}
 }
 
@@ -80,12 +74,15 @@ country_event = {
 				limit = { species = { NOT = { has_trait = trait_venerable } } }
 				modify_species = {
 					add_trait = trait_venerable # Cost 4
+					remove_trait = trait_enduring
+					remove_trait = trait_fleeting
 				}
 			}
 			if = {
 				limit = { species = { NOT = { has_trait = trait_quick_learners } } }
 				modify_species = {
 					add_trait = trait_quick_learners # Cost 1
+					remove_trait = trait_slow_learners
 				}
 			}
 			if = {
@@ -94,7 +91,32 @@ country_event = {
 					add_trait = trait_talented # Cost 1
 				}
 			}
-			#traits_exotic_metabolism would add 50 age, too, but requires the toxoids pack.
+			if = {
+				limit = {
+					owner = { has_origin = origin_overtuned }
+				}
+				modify_species = {
+					remove_trait = trait_spliced_adaptability
+					remove_trait = trait_juiced_power
+					remove_trait = trait_farm_hands
+					remove_trait = trait_crack_miner
+					remove_trait = trait_technical_skill
+					remove_trait = trait_crafted_smiles
+					remove_trait = trait_low_maintenance
+					remove_trait = trait_artificial_intelligence
+					remove_trait = trait_expressed_tradition
+					remove_trait = trait_preplanned_growth
+					remove_trait = trait_excessive_endurance
+				}
+			}
+			if = {
+				limit = {
+					host_has_dlc = "Toxoids Species Pack"
+				}
+				modify_species = {
+					add_trait = trait_exotic_metabolism
+				}
+			}
 		}
 		# Same thing for pool leaders
 		every_pool_leader = {
@@ -122,12 +144,15 @@ country_event = {
 				limit = { species = { NOT = { has_trait = trait_venerable } } }
 				modify_species = {
 					add_trait = trait_venerable # Cost 4
+					remove_trait = trait_enduring
+					remove_trait = trait_fleeting
 				}
 			}
 			if = {
 				limit = { species = { NOT = { has_trait = trait_quick_learners } } }
 				modify_species = {
 					add_trait = trait_quick_learners # Cost 1
+					remove_trait = trait_slow_learners
 				}
 			}
 			if = {
@@ -136,8 +161,35 @@ country_event = {
 					add_trait = trait_talented # Cost 1
 				}
 			}
-			
+			if = {
+				limit = {
+					owner = { has_origin = origin_overtuned }
+				}
+				modify_species = {
+					remove_trait = trait_spliced_adaptability
+					remove_trait = trait_juiced_power
+					remove_trait = trait_farm_hands
+					remove_trait = trait_crack_miner
+					remove_trait = trait_technical_skill
+					remove_trait = trait_crafted_smiles
+					remove_trait = trait_low_maintenance
+					remove_trait = trait_artificial_intelligence
+					remove_trait = trait_expressed_tradition
+					remove_trait = trait_preplanned_growth
+					remove_trait = trait_excessive_endurance
+				}
+			}
+			if = {
+				limit = {
+					host_has_dlc = "Toxoids Species Pack"
+				}
+				modify_species = {
+					add_trait = trait_exotic_metabolism
+				}
+			}
 		}
+		# Set the leader erudite traits
+		country_event = { id = utopia.2508 }
 	}
 }
 
@@ -233,6 +285,43 @@ country_event = {
 			}
 			
 		}
+		# Set the leader erudite traits
+		country_event = { id = utopia.2508 }
 	}
 	
+}
+
+# Events to trigger from console for debugging purposes
+# Micromanage everybody
+country_event = {
+	id = gene_micromanager_mod.4
+	hide_window = yes
+	is_triggered_only = yes
+
+
+	immediate = {
+		every_owned_pop = {
+			limit = {
+				species = { is_robotic = no }
+			}
+			gene_micromanage_pop = yes
+		}
+	}
+}
+
+# Micromanage a planet
+planet_event = {
+	id = gene_micromanager_mod.5
+	hide_window = yes
+	is_triggered_only = yes
+
+
+	immediate = {
+		every_owned_pop = {
+			limit = {
+				species = { is_robotic = no }
+			}
+			gene_micromanage_pop = yes
+		}
+	}
 }
