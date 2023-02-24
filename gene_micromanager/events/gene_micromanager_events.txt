@@ -10,6 +10,38 @@ country_event = {
 		# Called the first time when the edict is enabled, but we have to check for disablement
 		has_edict = gene_micromanager
 	}
+
+	immediate = {
+		export_trigger_value_to_variable = { trigger = genemod_num_organic_pops variable = num_pops_to_alter }
+		divide_variable = { which = num_pops_to_alter value = 120 }
+		ceiling_variable = num_pops_to_alter
+		while = {
+			count = num_pops_to_alter
+			random_owned_pop = {
+				limit = {
+					NOT = { has_pop_flag = gene_micromanaged }
+					species = { is_robotic = no }
+				}
+				gene_micromanage_pop = yes
+				set_pop_flag = gene_micromanaged
+			}
+		}
+		if = {
+			limit = {
+				NOT = { any_owned_pop = {
+						NOT = { has_pop_flag = gene_micromanaged }
+						species = { is_robotic = no }
+				} }
+			}
+			# No pops haven't been micromanaged yet. Clear all the flags and start a new pass.
+			every_owned_pop = {
+				remove_pop_flag = gene_micromanaged
+			}
+		}
+
+		# Loop back to do the next pop.
+		country_event = { id = gene_micromanager_mod.1 days = 30 }
+	}
 }
 
 # Leader Policy First Enabled or Leader Assigned.
@@ -37,19 +69,72 @@ country_event = {
 				modify_species = {
 					add_trait = trait_erudite # Cost 4
 				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_robust } } }
 				modify_species = {
 					add_trait = trait_robust # Cost 4
 				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_venerable } } }
 				modify_species = {
 					add_trait = trait_venerable # Cost 4
 				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_quick_learners } } }
 				modify_species = {
 					add_trait = trait_quick_learners # Cost 1
 				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_talented } } }
 				modify_species = {
 					add_trait = trait_talented # Cost 1
 				}
-				#traits_exotic_metabolism would add 50 age, too, but requires the toxoids pack.
+			}
+			#traits_exotic_metabolism would add 50 age, too, but requires the toxoids pack.
+		}
+		# Same thing for pool leaders
+		every_pool_leader = {
+			limit = {
+				NOT = { has_leader_flag = genemod_sculpted }
+				species = {
+					is_robotic = no
+					NOT = { has_trait = trait_mechanical }
+				}
+			}
+			set_leader_flag = genemod_sculpted
+			if = {
+				limit = { species = { NOT = { has_trait = trait_erudite } } }
+				modify_species = {
+					add_trait = trait_erudite # Cost 4
+				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_robust } } }
+				modify_species = {
+					add_trait = trait_robust # Cost 4
+				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_venerable } } }
+				modify_species = {
+					add_trait = trait_venerable # Cost 4
+				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_quick_learners } } }
+				modify_species = {
+					add_trait = trait_quick_learners # Cost 1
+				}
+			}
+			if = {
+				limit = { species = { NOT = { has_trait = trait_talented } } }
+				modify_species = {
+					add_trait = trait_talented # Cost 1
+				}
 			}
 			
 		}

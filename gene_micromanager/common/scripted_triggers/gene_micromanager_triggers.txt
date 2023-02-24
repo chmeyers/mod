@@ -1,0 +1,42 @@
+pop_job_produces_amenities = {
+	# All ruler jobs seem to create amenities
+	OR = {
+		has_job_category = ruler
+		has_job = entertainer
+		has_job = medical_worker
+		has_job = duelist
+		has_job = necro_apprentice
+		has_job = priest
+		has_job = death_priest
+		has_job = knight
+		has_job = clerk
+		has_job = mortal_initiate
+		has_job = preacher
+		has_job = ranger
+		has_job = squire
+		has_job = slave_toiler
+		has_job = servant
+		has_job = overlord_trader
+		has_job = aid_worker
+		has_job = overlord_mortal_initiate
+
+		#with agrarian idyll: pearl_diver, farmer, angler
+		# if materialist: culture worker and death chronicler
+		#technically colonist, but we don't list it as it's a temp job
+	}
+}
+
+pop_job_produces_trade = {
+	OR = {
+		has_job = merchant
+		has_job = executive
+		has_job = artificer
+		has_job = pearl_diver
+		has_job = manager
+		has_job = clerk
+		has_job = angler
+		has_job = preacher
+		has_job = overlord_manager
+		has_job = titan_hunter
+	}
+}

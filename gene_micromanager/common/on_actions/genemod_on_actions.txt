@@ -5,3 +5,11 @@ on_leader_spawned = {
 		gene_micromanager_mod.2
 	}
 }
+
+on_modification_complete = {
+	events = {
+		# Fix any modified leaders
+		# The event's trigger will check whether the policy is enabled.
+		gene_micromanager_mod.2
+	}
+}
