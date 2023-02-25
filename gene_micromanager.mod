@@ -6,3 +6,4 @@ tags={
 name="Genemod Micromanager"
 supported_version="3.6.*"
 path="C:/Users/chris/Documents/Paradox Interactive/Stellaris/mod/gene_micromanager"
+remote_file_id="2938437888"
