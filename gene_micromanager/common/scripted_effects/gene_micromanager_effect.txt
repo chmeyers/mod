@@ -515,9 +515,18 @@ gene_micromanage_add_traits = {
 		gene_micromanage_try_add = { TRAIT = trait_charismatic COST = 2 }
 	}
 
+	export_modifier_to_variable = {
+		modifier = pop_defense_armies_add
+		variable = genmod_pop_defense_armies
+	}
 	# worker    trait_very_strong (trait_juiced_power) 3 + (1)
 	if = {
-		limit = { has_job_category = worker }
+		limit = {
+			OR = {
+				has_job_category = worker
+				check_variable = { which = genmod_pop_defense_armies value > 0 }
+			}
+		}
 		if = {
 			limit = {
 				owner = { has_origin = origin_overtuned }
@@ -535,12 +544,24 @@ gene_micromanage_add_traits = {
 	}
 	# worker    trait_very_strong|strong 3|1
 	if = {
-		limit = { has_job_category = worker }
+		limit = {
+			OR = {
+				has_job_category = worker
+				check_variable = { which = genmod_pop_defense_armies value > 0 }
+			}
+		}
 		gene_micromanage_try_add = { TRAIT = trait_very_strong COST = 3 }
 		if = {
 			limit = { NOT = { pop_has_trait = trait_very_strong } }
 			gene_micromanage_try_add = { TRAIT = trait_strong COST = 1 }
 		}
+	}
+
+	if = {
+		limit = { check_variable = { which = genmod_pop_defense_armies value > 0 } }
+		# Soldier/Defense Army jobs get a higher priority for resilient
+		# We've already given them all the other army damage bonuses above.
+		gene_micromanage_try_add = { TRAIT = trait_resilient COST = 1 }
 	}
 
 	# slave worker/livestock    trait_nerve_stapled  3
@@ -647,6 +668,10 @@ gene_micromanage_add_traits = {
 	gene_micromanage_try_add = { TRAIT = trait_docile COST = 2 }
 	gene_micromanage_try_add = { TRAIT = trait_conservational COST = 1 }
 	gene_micromanage_try_add = { TRAIT = trait_resilient COST = 1 }
+
+	# Talented gives absolutely no benefit since they won't spawn leaders.
+	# Really it's just a sign that we ran out of things to give if you see it.
+	gene_micromanage_try_add = { TRAIT = trait_talented COST = 1 }
 }
 
 # Count the number of trait points and picks available for this pop and
