@@ -323,11 +323,6 @@ gene_micromanage_add_traits = {
 		if = {
 			limit = {
 				host_has_dlc = "Plantoids Species Pack"
-				OR = {
-					owner = { has_technology = tech_plantoid_transgenesis }
-					owner = { has_technology = tech_lithoid_transgenesis }
-				}
-				NOT = { pop_has_trait = trait_pc_nuked_preference }
 				NOT = { pop_has_trait = trait_voidling }
 				NOT = { pop_has_trait = trait_harvested_radiotrophic }
 				NOT = { pop_has_trait = trait_plantoid_phototrophic }
@@ -346,7 +341,18 @@ gene_micromanage_add_traits = {
 				}
 				gene_micromanage_try_add = { TRAIT = trait_plantoid_radiotrophic COST = 2 }
 			}
-			else = {
+			else_if = {
+				limit = {
+					OR = {
+						owner = { has_technology = tech_plantoid_transgenesis }
+						owner = { has_technology = tech_lithoid_transgenesis }
+					}
+					# Advanced Radiotrophic isn't really worth the two points if you have tomb
+					# world habitability, as you don't get the growth boost like the plantoid
+					# and lithoid versions. These pops will usually instead end up with rapid
+					# breeders.
+					NOT = { pop_has_trait = trait_pc_nuked_preference }
+				}
 				gene_micromanage_try_add = { TRAIT = trait_advanced_radiotrophic COST = 2 }
 			}
 		}
