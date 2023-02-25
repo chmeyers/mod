@@ -631,6 +631,8 @@ gene_micromanage_add_traits = {
 			NOT = { pop_has_trait = trait_vat_grown }
 			NOT = { pop_has_trait = trait_tiyanki }
 			NOT = { pop_has_trait = trait_fertile }
+			NOT = { pop_has_trait = trait_clone_soldier_infertile }
+			NOT = { pop_has_trait = trait_clone_soldier_infertile_full_potential }
 		}
 		gene_micromanage_try_add = { TRAIT = trait_rapid_breeders COST = 2 }
 	}
