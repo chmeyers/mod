@@ -124,6 +124,7 @@ gene_micromanage_reset_habitability =  {
 			NOT = { home_planet = { is_artificial = yes } }
 			NOT = { home_planet = { is_ideal = yes } }
 			NOT = { home_planet = { is_planet_class = pc_relic } }
+			NOT = { planet = { is_planet_class = pc_nuked } }
 			NOT = { home_planet = { is_planet_class = pc_machine } }
 			NOT = { home_planet = { is_planet_class = pc_hive } }
 			NOT = { species = { is_half_species = any } }
@@ -162,6 +163,7 @@ gene_micromanage_habitability =  {
 			NOT = { planet = { is_artificial = yes } }
 			NOT = { planet = { is_ideal = yes } }
 			NOT = { planet = { is_planet_class = pc_relic } }
+			NOT = { planet = { is_planet_class = pc_nuked } }
 			NOT = { planet = { is_planet_class = pc_machine } }
 			NOT = { planet = { is_planet_class = pc_hive } }
 			NOT = { planet = { is_ideal_planet_class = { who = prev.species status = yes } } }
