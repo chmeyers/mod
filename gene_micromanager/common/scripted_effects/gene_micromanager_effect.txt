@@ -330,6 +330,7 @@ gene_micromanage_add_traits = {
 				NOT = { pop_has_trait = trait_advanced_phototrophic }
 				NOT = { is_species_class = PLANT }
 				NOT = { is_species_class = FUN }
+				is_lithoid = no
 			}
 			gene_micromanage_try_add = { TRAIT = trait_advanced_radiotrophic COST = 2 }
 		}
