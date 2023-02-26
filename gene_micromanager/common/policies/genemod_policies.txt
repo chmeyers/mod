@@ -2,7 +2,11 @@
 leader_enhancement = {
 
 	potential = {
-		has_technology = tech_selected_lineages
+		OR = {
+			has_technology = tech_selected_lineages
+			has_active_tradition = tr_genetics_finish
+			has_active_tradition = tr_genetics_finish_extra_traits
+		}
 	}
 
 	option = {

@@ -187,16 +187,18 @@ gene_micromanage_add_negatives = {
 	# trait_fleeting -1
 	# trait_slow_learners -1
 	# trait_solitary -1
+	set_variable = { which = need_trait_points value = $WANT$ }
+	subtract_variable = { which = need_trait_points value = available_trait_points }
 	if = {
 		limit = {
 			# Don't add negatives if we don't have to.
 			check_variable = { which = available_trait_points value < $WANT$ }
 			# Never take the last pick with a negative trait.
 			check_variable = { which = available_trait_picks value >= 2 }
-			check_variable = { which = available_trait_picks value >= $WANT$ }
+			check_variable = { which = available_trait_picks value >= need_trait_points }
 			# If we can't add repugnant, we need an extra pick
 			OR = {
-				check_variable = { which = available_trait_picks value > $WANT$ }
+				check_variable = { which = available_trait_picks value > need_trait_points }
 				AND = {
 					pop_job_produces_amenities = no
 					NOT = { pop_has_trait = trait_charismatic }
@@ -689,7 +691,10 @@ gene_micromanage_add_traits = {
 		gene_micromanage_try_add = { TRAIT = trait_low_maintenance COST = 1 }
 	}
 	gene_micromanage_try_add = { TRAIT = trait_docile COST = 2 }
-	gene_micromanage_try_add = { TRAIT = trait_conservational COST = 1 }
+	if = {
+		limit = { NOT = { pop_has_trait = trait_hive_mind } }
+		gene_micromanage_try_add = { TRAIT = trait_conservational COST = 1 }
+	}
 	gene_micromanage_try_add = { TRAIT = trait_resilient COST = 1 }
 
 	# Talented gives absolutely no benefit since they won't spawn leaders.
