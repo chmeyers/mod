@@ -5,6 +5,16 @@ gene_micromanager = {
 	icon = "GFX_edict_type_time"
 	resources = {
 		category = edicts
+
+		cost = {
+			unity = 3000
+		}
+
+		cost = {
+			unity = 10
+			multiplier = value:edict_organic_pop_size_effect
+		}
+
 		upkeep = {
 			unity = 1
 			multiplier = value:edict_organic_pop_size_effect

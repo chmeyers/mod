@@ -21,6 +21,7 @@ country_event = {
 				}
 				gene_micromanage_pop = yes
 				set_pop_flag = gene_micromanaged
+				set_pop_flag = gene_micromanaged_once
 			}
 		}
 		if = {
