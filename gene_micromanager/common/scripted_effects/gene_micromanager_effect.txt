@@ -393,6 +393,7 @@ gene_micromanage_add_traits = {
 			OR = {
 				planet = { habitability = { who = prev.species value < 0.81 } }
 				has_job_category = worker
+				has_job_category = simple_drone
 				is_unemployed = yes
 			}
 		}
@@ -549,6 +550,7 @@ gene_micromanage_add_traits = {
 		limit = {
 			OR = {
 				has_job_category = worker
+				has_job_category = simple_drone
 				check_variable = { which = genmod_pop_defense_armies value > 0 }
 			}
 		}
@@ -572,6 +574,7 @@ gene_micromanage_add_traits = {
 		limit = {
 			OR = {
 				has_job_category = worker
+				has_job_category = simple_drone
 				check_variable = { which = genmod_pop_defense_armies value > 0 }
 			}
 		}
@@ -597,6 +600,7 @@ gene_micromanage_add_traits = {
 				has_slavery_type = { type = slavery_livestock }
 				has_slavery_type = { type = slavery_matrix }
 				has_job_category = worker
+				has_job_category = simple_drone
 			}
 			NOT = { pop_has_trait = trait_erudite }
 			NOT = { pop_has_trait = trait_intelligent }
@@ -694,6 +698,12 @@ gene_micromanage_add_traits = {
 	if = {
 		limit = { NOT = { pop_has_trait = trait_hive_mind } }
 		gene_micromanage_try_add = { TRAIT = trait_conservational COST = 1 }
+	}
+	if = {
+		limit = { NOT = { pop_has_trait = trait_very_strong } }
+		# Strong isn't really useful, but it's better than resilient
+		# and let's them move jobs easier.
+		gene_micromanage_try_add = { TRAIT = trait_strong COST = 1 }
 	}
 	gene_micromanage_try_add = { TRAIT = trait_resilient COST = 1 }
 

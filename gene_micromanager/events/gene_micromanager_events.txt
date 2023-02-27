@@ -19,6 +19,13 @@ country_event = {
 					NOT = { has_pop_flag = gene_micromanaged }
 					species = { is_robotic = no }
 				}
+				weights = {
+					base = 1
+					modifier = {
+						add = 100
+						NOT = { has_pop_flag = gene_micromanaged_once }
+					}
+				}
 				gene_micromanage_pop = yes
 				set_pop_flag = gene_micromanaged
 				set_pop_flag = gene_micromanaged_once

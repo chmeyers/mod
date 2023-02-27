@@ -19,6 +19,8 @@ pop_job_produces_amenities = {
 		has_job = overlord_trader
 		has_job = aid_worker
 		has_job = overlord_mortal_initiate
+		has_job = maintenance_drone
+		has_job = synapse_drone
 
 		#with agrarian idyll: pearl_diver, farmer, angler
 		# if materialist: culture worker and death chronicler
