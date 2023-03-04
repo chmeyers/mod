@@ -45,7 +45,7 @@ edict_startup_cost_effect = {
 }
 
 # Balanced to take 10 years to transform every owned non-robotic pop.
-# Vanilla trait modification cost is 3k + num_pops*(5 + (3 if climate_mod) + 20*trait_points_changed)
+# Vanilla trait modification cost is 3k + num_pops*(5 + (60 if climate_mod) + 20*trait_points_changed)
 # Vanilla price is halved with the Genetics Retrovirus tradition.
 # Our edict is only enabled if the Genetics Tradition Tree is completed,
 # so we charge a flat 100 per pop, which is undercharging if we make a lot of changes, but

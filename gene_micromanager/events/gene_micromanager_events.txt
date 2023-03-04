@@ -53,148 +53,21 @@ country_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_policy_flag = leader_enhancement_custom_genesculpting
+		OR = {
+			has_policy_flag = leader_enhancement_custom_genesculpting
+			has_policy_flag = leader_enhancement_custom_cybernetics
+		}
 	}
 
 	immediate = {
 		every_owned_leader = {
-			limit = {
-				NOT = { has_leader_flag = genemod_sculpted }
-				species = {
-					is_robotic = no
-					NOT = { has_trait = trait_mechanical }
-				}
-			}
-			set_leader_flag = genemod_sculpted
-			if = {
-				limit = { species = { NOT = { has_trait = trait_erudite } } }
-				modify_species = {
-					add_trait = trait_erudite # Cost 4
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_robust } } }
-				modify_species = {
-					add_trait = trait_robust # Cost 4
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_venerable } } }
-				modify_species = {
-					add_trait = trait_venerable # Cost 4
-					remove_trait = trait_enduring
-					remove_trait = trait_fleeting
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_quick_learners } } }
-				modify_species = {
-					add_trait = trait_quick_learners # Cost 1
-					remove_trait = trait_slow_learners
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_talented } } }
-				modify_species = {
-					add_trait = trait_talented # Cost 1
-				}
-			}
-			if = {
-				limit = {
-					owner = { has_origin = origin_overtuned }
-				}
-				modify_species = {
-					remove_trait = trait_spliced_adaptability
-					remove_trait = trait_juiced_power
-					remove_trait = trait_farm_hands
-					remove_trait = trait_crack_miner
-					remove_trait = trait_technical_skill
-					remove_trait = trait_crafted_smiles
-					remove_trait = trait_low_maintenance
-					remove_trait = trait_artificial_intelligence
-					remove_trait = trait_expressed_tradition
-					remove_trait = trait_preplanned_growth
-					remove_trait = trait_excessive_endurance
-				}
-			}
-			if = {
-				limit = {
-					host_has_dlc = "Toxoids Species Pack"
-				}
-				modify_species = {
-					add_trait = trait_exotic_metabolism
-				}
-			}
+			genemod_enhance_leader_genetic = yes
+			genemod_enhance_leader_cybernetic = yes
 		}
 		# Same thing for pool leaders
 		every_pool_leader = {
-			limit = {
-				NOT = { has_leader_flag = genemod_sculpted }
-				species = {
-					is_robotic = no
-					NOT = { has_trait = trait_mechanical }
-				}
-			}
-			set_leader_flag = genemod_sculpted
-			if = {
-				limit = { species = { NOT = { has_trait = trait_erudite } } }
-				modify_species = {
-					add_trait = trait_erudite # Cost 4
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_robust } } }
-				modify_species = {
-					add_trait = trait_robust # Cost 4
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_venerable } } }
-				modify_species = {
-					add_trait = trait_venerable # Cost 4
-					remove_trait = trait_enduring
-					remove_trait = trait_fleeting
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_quick_learners } } }
-				modify_species = {
-					add_trait = trait_quick_learners # Cost 1
-					remove_trait = trait_slow_learners
-				}
-			}
-			if = {
-				limit = { species = { NOT = { has_trait = trait_talented } } }
-				modify_species = {
-					add_trait = trait_talented # Cost 1
-				}
-			}
-			if = {
-				limit = {
-					owner = { has_origin = origin_overtuned }
-				}
-				modify_species = {
-					remove_trait = trait_spliced_adaptability
-					remove_trait = trait_juiced_power
-					remove_trait = trait_farm_hands
-					remove_trait = trait_crack_miner
-					remove_trait = trait_technical_skill
-					remove_trait = trait_crafted_smiles
-					remove_trait = trait_low_maintenance
-					remove_trait = trait_artificial_intelligence
-					remove_trait = trait_expressed_tradition
-					remove_trait = trait_preplanned_growth
-					remove_trait = trait_excessive_endurance
-				}
-			}
-			if = {
-				limit = {
-					host_has_dlc = "Toxoids Species Pack"
-				}
-				modify_species = {
-					add_trait = trait_exotic_metabolism
-				}
-			}
+			genemod_enhance_leader_genetic = yes
+			genemod_enhance_leader_cybernetic = yes
 		}
 		# Set the leader erudite traits
 		country_event = { id = utopia.2508 }
@@ -209,11 +82,17 @@ country_event = {
 
 	trigger = {
 		NOT = { has_policy_flag = leader_enhancement_custom_genesculpting }
+		NOT = { has_policy_flag = leader_enhancement_custom_cybernetics }
 	}
 
 	immediate = {
 		every_owned_leader = {
-			limit = { has_leader_flag = genemod_sculpted }
+			limit = {
+				OR = {
+					has_leader_flag = genemod_sculpted
+					has_leader_flag = genemod_cybersculpted
+				}
+			}
 			save_event_target_as = genmod_sculpt_undo
 			owner = {
 				if = {
@@ -232,6 +111,7 @@ country_event = {
 						event_target:genmod_sculpt_undo = {
 							change_species = prev
 							remove_leader_flag = genemod_sculpted
+							remove_leader_flag = genemod_cybersculpted
 						}
 					}
 				}
@@ -245,6 +125,7 @@ country_event = {
 					event_target:genmod_sculpt_undo = {
 						change_species = prev
 						remove_leader_flag = genemod_sculpted
+						remove_leader_flag = genemod_cybersculpted
 					}
 				}
 				# Else: They don't own any pops of the leader's species.
@@ -254,7 +135,12 @@ country_event = {
 		}
 		# Same thing with the pool leaders
 		every_pool_leader = {
-			limit = { has_leader_flag = genemod_sculpted }
+			limit = {
+				OR = {
+					has_leader_flag = genemod_sculpted
+					has_leader_flag = genemod_cybersculpted
+				}
+			}
 			save_event_target_as = genmod_sculpt_undo
 			owner = {
 				if = {
@@ -273,6 +159,7 @@ country_event = {
 						event_target:genmod_sculpt_undo = {
 							change_species = prev
 							remove_leader_flag = genemod_sculpted
+							remove_leader_flag = genemod_cybersculpted
 						}
 					}
 				}
@@ -286,6 +173,7 @@ country_event = {
 					event_target:genmod_sculpt_undo = {
 						change_species = prev
 						remove_leader_flag = genemod_sculpted
+						remove_leader_flag = genemod_cybersculpted
 					}
 				}
 				# Else: They don't own any pops of the leader's species.

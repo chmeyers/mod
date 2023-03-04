@@ -788,3 +788,151 @@ gene_micromanage_pop = {
 		gene_micromanage_habitability = yes
 	}
 }
+
+# Scope this = leader
+genemod_enhance_leader_genetic = {
+	if = {
+		limit = {
+			has_policy_flag = leader_enhancement_custom_genesculpting
+			NOT = { has_leader_flag = genemod_sculpted }
+			species = {
+				is_robotic = no
+				NOT = { has_trait = trait_mechanical }
+			}
+		}
+		set_leader_flag = genemod_sculpted
+		if = {
+			limit = { species = { NOT = { has_trait = trait_erudite } } }
+			modify_species = {
+				add_trait = trait_erudite # Cost 4
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_robust } } }
+			modify_species = {
+				add_trait = trait_robust # Cost 4
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_venerable } } }
+			modify_species = {
+				add_trait = trait_venerable # Cost 4
+				remove_trait = trait_enduring
+				remove_trait = trait_fleeting
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_quick_learners } } }
+			modify_species = {
+				add_trait = trait_quick_learners # Cost 1
+				remove_trait = trait_slow_learners
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_talented } } }
+			modify_species = {
+				add_trait = trait_talented # Cost 1
+			}
+		}
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			modify_species = {
+				remove_trait = trait_spliced_adaptability
+				remove_trait = trait_juiced_power
+				remove_trait = trait_farm_hands
+				remove_trait = trait_crack_miner
+				remove_trait = trait_technical_skill
+				remove_trait = trait_crafted_smiles
+				remove_trait = trait_low_maintenance
+				remove_trait = trait_artificial_intelligence
+				remove_trait = trait_expressed_tradition
+				remove_trait = trait_preplanned_growth
+				remove_trait = trait_excessive_endurance
+			}
+		}
+		if = {
+			limit = {
+				host_has_dlc = "Toxoids Species Pack"
+			}
+			modify_species = {
+				add_trait = trait_exotic_metabolism
+			}
+		}
+	}
+}
+
+# Scope this = leader
+genemod_enhance_leader_cybernetic = {
+	if = {
+		limit = {
+			has_policy_flag = leader_enhancement_custom_cybernetics
+			NOT = { has_leader_flag = genemod_cybersculpted }
+			species = {
+				is_robotic = no
+				NOT = { has_trait = trait_mechanical }
+			}
+		}
+		set_leader_flag = genemod_cybersculpted
+		if = {
+			# They should already be cyborgs, but we make sure.
+			limit = { species = { NOT = { has_trait = trait_cybernetic } } }
+			modify_species = {
+				add_trait = trait_cybernetic
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_cyborg_enhanced_memory } } }
+			modify_species = {
+				add_trait = trait_cyborg_enhanced_memory
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_cyborg_learning_algorithms } } }
+			modify_species = {
+				add_trait = trait_cyborg_learning_algorithms
+			}
+		}
+		# They also get baseline genetic traits.
+		if = {
+			limit = { species = { NOT = { has_trait = trait_venerable } } }
+			modify_species = {
+				add_trait = trait_venerable # Cost 4
+				remove_trait = trait_enduring
+				remove_trait = trait_fleeting
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_quick_learners } } }
+			modify_species = {
+				add_trait = trait_quick_learners # Cost 1
+				remove_trait = trait_slow_learners
+			}
+		}
+		if = {
+			limit = { species = { NOT = { has_trait = trait_talented } } }
+			modify_species = {
+				add_trait = trait_talented # Cost 1
+			}
+		}
+		if = {
+			limit = {
+				owner = { has_origin = origin_overtuned }
+			}
+			modify_species = {
+				remove_trait = trait_spliced_adaptability
+				remove_trait = trait_juiced_power
+				remove_trait = trait_farm_hands
+				remove_trait = trait_crack_miner
+				remove_trait = trait_technical_skill
+				remove_trait = trait_crafted_smiles
+				remove_trait = trait_low_maintenance
+				remove_trait = trait_artificial_intelligence
+				remove_trait = trait_expressed_tradition
+				remove_trait = trait_preplanned_growth
+				remove_trait = trait_excessive_endurance
+			}
+		}
+	}
+}
