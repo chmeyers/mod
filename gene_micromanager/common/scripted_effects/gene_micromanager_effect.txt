@@ -1,93 +1,145 @@
 
+
+
+# Remove a trait if the base species does not have it.
+gene_micromanage_try_remove_trait = {
+	if = {
+		limit = { pop_has_trait = $TRAIT$ }
+		#TODO
+	}
+}
+
+# Remove traits that the species' main template does not have.
+# This simulates reverting to a species template before customization.
+# It's significantly more complicated, so we only do it when we aren't
+# allowed to add/remove traits at will as we are with Genetic Ascension.
+gene_micromanage_try_remove_traits = {
+	optimize_memory
+	gene_micromanage_try_remove_trait = { TRAIT = trait_adaptive_lithoid }
+}
+
 # Remove every trait that we are willing to remove to leave a 
 # clean slate for customization.
 gene_micromanage_remove_traits = {
-	modify_species = {
-		species = this
-		change_scoped_species = yes
-		remove_trait = trait_adaptive_lithoid
-		remove_trait = trait_rapid_breeders_lithoid
-		remove_trait = trait_delicious
-		remove_trait = trait_nerve_stapled
-		remove_trait = trait_fertile
-		remove_trait = trait_robust
-		remove_trait = trait_erudite
-		remove_trait = trait_vat_grown
-		remove_trait = trait_felsic
-		remove_trait = trait_natural_machinist
-		remove_trait = trait_incubator
-		remove_trait = trait_agrarian
-		remove_trait = trait_ingenious
-		remove_trait = trait_industrious
-		remove_trait = trait_intelligent
-		remove_trait = trait_thrifty
-		remove_trait = trait_natural_engineers
-		remove_trait = trait_natural_physicists
-		remove_trait = trait_natural_sociologists
-		remove_trait = trait_extremely_adaptive
-		remove_trait = trait_adaptive
-		remove_trait = trait_nonadaptive
-		remove_trait = trait_rapid_breeders
-		remove_trait = trait_slow_breeders
-		remove_trait = trait_talented
-		remove_trait = trait_quick_learners
-		remove_trait = trait_slow_learners
-		remove_trait = trait_traditional
-		remove_trait = trait_quarrelsome
-		remove_trait = trait_docile
-		remove_trait = trait_unruly
-		remove_trait = trait_very_strong
-		remove_trait = trait_strong
-		remove_trait = trait_weak
-		remove_trait = trait_nomadic
-		remove_trait = trait_sedentary
-		remove_trait = trait_communal
-		remove_trait = trait_solitary
-		remove_trait = trait_charismatic
-		remove_trait = trait_repugnant
-		remove_trait = trait_conformists
-		remove_trait = trait_deviants
-		remove_trait = trait_venerable
-		remove_trait = trait_enduring
-		remove_trait = trait_fleeting
-		remove_trait = trait_fleeting_lithoid
-		remove_trait = trait_decadent
-		remove_trait = trait_resilient
-		remove_trait = trait_conservational
-		remove_trait = trait_wasteful
-		remove_trait = trait_plantoid_radiotrophic
-		remove_trait = trait_lithoid_radiotrophic
-	}
-	# Probably a bug on their side, but you can get the good enigmatic intelligence
-	# trait with Erudite only if you were already erudite when it was initially added.
-	# In that edge case, we don't remove Erudite.
+	optimize_memory
 	if = {
-		limit = { NOT = { pop_has_trait = trait_enigmatic_intelligence } }
+		limit = { can_genemod_genetic = yes }
 		modify_species = {
 			species = this
 			change_scoped_species = yes
+			remove_trait = trait_adaptive_lithoid
+			remove_trait = trait_rapid_breeders_lithoid
+			remove_trait = trait_delicious
+			remove_trait = trait_nerve_stapled
+			remove_trait = trait_fertile
+			remove_trait = trait_robust
 			remove_trait = trait_erudite
+			remove_trait = trait_vat_grown
+			remove_trait = trait_felsic
+			remove_trait = trait_natural_machinist
+			remove_trait = trait_incubator
+			remove_trait = trait_agrarian
+			remove_trait = trait_ingenious
+			remove_trait = trait_industrious
+			remove_trait = trait_intelligent
+			remove_trait = trait_thrifty
+			remove_trait = trait_natural_engineers
+			remove_trait = trait_natural_physicists
+			remove_trait = trait_natural_sociologists
+			remove_trait = trait_extremely_adaptive
+			remove_trait = trait_adaptive
+			remove_trait = trait_rapid_breeders
+			remove_trait = trait_talented
+			remove_trait = trait_quick_learners
+			remove_trait = trait_traditional
+			remove_trait = trait_docile
+			remove_trait = trait_very_strong
+			remove_trait = trait_strong
+			remove_trait = trait_nomadic
+			remove_trait = trait_communal
+			remove_trait = trait_charismatic
+			remove_trait = trait_conformists
+			remove_trait = trait_venerable
+			remove_trait = trait_enduring
+			remove_trait = trait_conservational
+			remove_trait = trait_plantoid_radiotrophic
+			remove_trait = trait_lithoid_radiotrophic
+			# Negative Traits
+			remove_trait = trait_nonadaptive
+			remove_trait = trait_slow_breeders
+			remove_trait = trait_slow_learners
+			remove_trait = trait_quarrelsome
+			remove_trait = trait_unruly
+			remove_trait = trait_weak
+			remove_trait = trait_sedentary
+			remove_trait = trait_solitary
+			remove_trait = trait_repugnant
+			remove_trait = trait_deviants
+			remove_trait = trait_fleeting
+			remove_trait = trait_fleeting_lithoid
+			remove_trait = trait_decadent
+			remove_trait = trait_wasteful
+			remove_trait = trait_resilient
+		}
+		# Probably a bug on their side, but you can get the good enigmatic intelligence
+		# trait with Erudite only if you were already erudite when it was initially added.
+		# In that edge case, we don't remove Erudite.
+		if = {
+			limit = { NOT = { pop_has_trait = trait_enigmatic_intelligence } }
+			modify_species = {
+				species = this
+				change_scoped_species = yes
+				remove_trait = trait_erudite
+			}
+		}
+		# These have additional requirements
+		if = {
+			limit = {
+				NOT = { owner = { has_ascension_perk = ap_hydrocentric } }
+			}
+			modify_species = {
+				species = this
+				change_scoped_species = yes
+				remove_trait = trait_aquatic
+			}
+		}
+		if = {
+			limit = {
+				owner = { has_technology = tech_plantoid_transgenesis }
+			}
+			modify_species = {
+				species = this
+				change_scoped_species = yes
+				remove_trait = trait_advanced_radiotrophic
+			}
 		}
 	}
-	# These have additional requirements
 	if = {
-		limit = {
-			NOT = { owner = { has_ascension_perk = ap_hydrocentric } }
-		}
+		limit = { can_genemod_cybernetic = yes }
 		modify_species = {
 			species = this
 			change_scoped_species = yes
-			remove_trait = trait_aquatic
+			remove_trait = trait_cyborg_power_drills
+			remove_trait = trait_cyborg_harvesters
+			remove_trait = trait_cyborg_superconductive
+			remove_trait = trait_cyborg_efficient_processors
+			remove_trait = trait_cyborg_logic_engines
+			remove_trait = trait_cyborg_loyalty_circuits
+			remove_trait = trait_cyborg_double_jointed
+			remove_trait = trait_cyborg_bulky
+			remove_trait = trait_cyborg_enhanced_memory
+			remove_trait = trait_cyborg_durable
+			remove_trait = trait_cyborg_high_maintenance
+			remove_trait = trait_cyborg_learning_algorithms
+			remove_trait = trait_cyborg_power_intensive
+			remove_trait = trait_cyborg_neural_limiters
+			remove_trait = trait_cyborg_streamlined_protocols
+			remove_trait = trait_cyborg_high_bandwidth
+			remove_trait = trait_cyborg_trading_algorithms
 		}
-	}
-	if = {
-		limit = {
-			owner = { has_technology = tech_plantoid_transgenesis }
-		}
-		modify_species = {
-			species = this
-			change_scoped_species = yes
-			remove_trait = trait_advanced_radiotrophic
+		if = {
+			limit = { NOT = { can_genemod_genetic = yes } }
+			#gene_micromanage_remove_added_traits = yes
 		}
 	}
 	# Remove Overtuned traits only if we can add them back.
@@ -187,46 +239,63 @@ gene_micromanage_add_negatives = {
 	# trait_fleeting -1
 	# trait_slow_learners -1
 	# trait_solitary -1
-	set_variable = { which = need_trait_points value = $WANT$ }
-	subtract_variable = { which = need_trait_points value = available_trait_points }
+	set_variable = { which = possible_trait_picks value = available_trait_picks }
+	# Need one pick for the positive trait, we never take the last pick with a negative.
+	subtract_variable = { which = possible_trait_picks value = 1 }
 	if = {
 		limit = {
 			# Don't add negatives if we don't have to.
 			check_variable = { which = available_trait_points value < $WANT$ }
-			# Never take the last pick with a negative trait.
-			check_variable = { which = available_trait_picks value >= 2 }
-			check_variable = { which = available_trait_picks value >= need_trait_points }
-			# If we can't add repugnant, we need an extra pick
-			OR = {
-				check_variable = { which = available_trait_picks value > need_trait_points }
-				AND = {
-					pop_job_produces_amenities = no
-					NOT = { pop_has_trait = trait_charismatic }
-					NOT = { pop_has_trait = trait_repugnant }
-				}
-			}
 		}
 		# Figure out whether we can get enough points before actually adding any traits
 		set_variable = { which = possible_trait_points value = available_trait_points }
+		
 		if = {
 			limit = {
+				check_variable = { which = possible_trait_picks value >= 1 }
+				can_genemod_cybernetic = yes
+				NOT = { pop_has_trait = trait_cyborg_neural_limiters }
+			}
+			change_variable = { which = possible_trait_points value = 2 }
+			subtract_variable = { which = possible_trait_picks value = 1 }
+		}
+		if = {
+			limit = {
+				check_variable = { which = possible_trait_picks value >= 1 }
+				can_genemod_genetic = yes
 				pop_job_produces_amenities = no
 				NOT = { pop_has_trait = trait_charismatic }
 				NOT = { pop_has_trait = trait_repugnant }
 			}
 			change_variable = { which = possible_trait_points value = 2 }
+			subtract_variable = { which = possible_trait_picks value = 1 }
 		}
 		if = {
-			limit = { NOT = { pop_has_trait = trait_fleeting } }
+			limit = {
+				check_variable = { which = possible_trait_picks value >= 1 }
+				can_genemod_genetic = yes
+				NOT = { pop_has_trait = trait_fleeting }
+			}
 			change_variable = { which = possible_trait_points value = 1 }
+			subtract_variable = { which = possible_trait_picks value = 1 }
 		}
 		if = {
-			limit = { NOT = { pop_has_trait = trait_slow_learners } }
+			limit = {
+				check_variable = { which = possible_trait_picks value >= 1 }
+				can_genemod_genetic = yes
+				NOT = { pop_has_trait = trait_slow_learners }
+			}
 			change_variable = { which = possible_trait_points value = 1 }
+			subtract_variable = { which = possible_trait_picks value = 1 }
 		}
 		if = {
-			limit = { NOT = { pop_has_trait = trait_solitary } }
+			limit = {
+				check_variable = { which = possible_trait_picks value >= 1 }
+				can_genemod_genetic = yes
+				NOT = { pop_has_trait = trait_solitary }
+			}
 			change_variable = { which = possible_trait_points value = 1 }
+			subtract_variable = { which = possible_trait_picks value = 1 }
 		}
 
 		if = {
@@ -236,6 +305,20 @@ gene_micromanage_add_negatives = {
 			# We can do it. Now actually add them.
 			if = {
 				limit = {
+					can_genemod_cybernetic = yes
+					NOT = { pop_has_trait = trait_cyborg_neural_limiters }
+				}
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					add_trait = trait_cyborg_neural_limiters
+				}
+				change_variable = { which = available_trait_points value = 2 }
+				subtract_variable = { which = available_trait_picks value = 1 }
+			}
+			if = {
+				limit = {
+					can_genemod_genetic = yes
 					pop_job_produces_amenities = no
 					NOT = { pop_has_trait = trait_charismatic }
 					NOT = { pop_has_trait = trait_repugnant }
@@ -250,6 +333,7 @@ gene_micromanage_add_negatives = {
 			}
 			if = {
 				limit = {
+					can_genemod_genetic = yes
 					check_variable = { which = available_trait_points value < $WANT$ }
 					NOT = { pop_has_trait = trait_fleeting }
 				}
@@ -263,6 +347,7 @@ gene_micromanage_add_negatives = {
 			}
 			if = {
 				limit = {
+					can_genemod_genetic = yes
 					check_variable = { which = available_trait_points value < $WANT$ }
 					NOT = { pop_has_trait = trait_slow_learners }
 				}
@@ -276,6 +361,7 @@ gene_micromanage_add_negatives = {
 			}
 			if = {
 				limit = {
+					can_genemod_genetic = yes
 					check_variable = { which = available_trait_points value < $WANT$ }
 					NOT = { pop_has_trait = trait_solitary }
 					NOT = { pop_has_trait = trait_nerve_stapled }
@@ -295,7 +381,35 @@ gene_micromanage_add_negatives = {
 
 gene_micromanage_try_add = {
 	if = {
-		limit = { NOT = { has_trait = $TRAIT$ } }
+		limit = {
+			can_genemod_genetic = yes
+			NOT = { has_trait = $TRAIT$ }
+		}
+		# Add negatives if needed.
+		gene_micromanage_add_negatives = { WANT = $COST$ }
+		if = {
+			limit = {
+				check_variable = { which = available_trait_points value >= $COST$ }
+				check_variable = { which = available_trait_picks value >= 1 }
+			}
+			# Go ahead and add it.
+			modify_species = {
+				species = this
+				change_scoped_species = yes
+				add_trait = $TRAIT$
+			}
+			subtract_variable = { which = available_trait_points value = $COST$ }
+			subtract_variable = { which = available_trait_picks value = 1 }
+		}
+	}
+}
+
+gene_micromanage_try_add_cyber = {
+	if = {
+		limit = {
+			can_genemod_cybernetic = yes
+			NOT = { has_trait = $TRAIT$ }
+		}
 		# Add negatives if needed.
 		gene_micromanage_add_negatives = { WANT = $COST$ }
 		if = {
@@ -317,6 +431,7 @@ gene_micromanage_try_add = {
 
 # Add traits back
 gene_micromanage_add_traits = {
+	optimize_memory
 	# tomb_world   (trait_advanced_radiotrophic) 2 Also need Habitability!
 	if = {
 		limit = {
@@ -433,7 +548,9 @@ gene_micromanage_add_traits = {
 				pop_produces_resource = { type = physics_research amount > 0}
 			}
 		}
-		# We give the cheap one-type trait first, in a set order. Not necessarily ideal,
+		# The cyborg one is best if they can do cybernetic.
+		gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_logic_engines COST = 1 }
+		# We give the cheap one-type trait next, in a set order. Not necessarily ideal,
 		# but it makes the logic simpler, and we shouldn't be point limited for researchers.
 		if = {
 			limit = { pop_produces_resource = { type = society_research amount > 0} }
@@ -500,6 +617,7 @@ gene_micromanage_add_traits = {
 			}
 			gene_micromanage_try_add = { TRAIT = trait_crack_miner COST = 1 }
 		}
+		gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_power_drills COST = 1 }
 		gene_micromanage_try_add = { TRAIT = trait_industrious COST = 2 }
 	}
 	# energy   trait_ingenious  (trait_technical_skill) 2 + (1)
@@ -511,6 +629,7 @@ gene_micromanage_add_traits = {
 			}
 			gene_micromanage_try_add = { TRAIT = trait_technical_skill COST = 1 }
 		}
+		gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_superconductive COST = 1 }
 		gene_micromanage_try_add = { TRAIT = trait_ingenious COST = 2 }
 	}
 	# food   trait_agrarian  (trait_farm_hands) 2 + (1)
@@ -522,11 +641,13 @@ gene_micromanage_add_traits = {
 			}
 			gene_micromanage_try_add = { TRAIT = trait_farm_hands COST = 1 }
 		}
+		gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_harvesters COST = 1 }
 		gene_micromanage_try_add = { TRAIT = trait_agrarian COST = 2 }
 	}
 	# trade_value   trait_thrifty   2
 	if = {
 		limit = { pop_job_produces_trade = yes }
+		gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_trading_algorithms COST = 1 }
 		gene_micromanage_try_add = { TRAIT = trait_thrifty COST = 2 }
 	}
 	# amenities   trait_charismatic (trait_crafted_smiles) 2 + (1)
@@ -634,6 +755,8 @@ gene_micromanage_add_traits = {
 		}
 	}
 
+	# Pretty much all cyborgs should end up with efficient processors.
+	gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_efficient_processors COST = 2 }
 	# all_job    trait_robust 4
 	# Since Robust is so expensive there are situations where it isn't actually the best choice here
 	# if we don't need the habitability boost that comes with it, but it's never a bad choice, especially
@@ -647,6 +770,7 @@ gene_micromanage_add_traits = {
 	# Extra traits to use up the rest of our points.
 	# growth    trait_fertile/trait_rapid_breeders trait_nomadic
 	# (trait_preplanned_growth, trait_incubator)  4/2 + 1 + (2, 2)
+	# cyborg_double_jointed 1
 	# Incubators only makes sense when the planet population is < 25, we are even more conservative than that.
 	if = {
 		limit = {
@@ -686,14 +810,25 @@ gene_micromanage_add_traits = {
 		}
 		gene_micromanage_try_add = { TRAIT = trait_rapid_breeders COST = 2 }
 	}
+	gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_double_jointed COST = 1 }
 	gene_micromanage_try_add = { TRAIT = trait_nomadic COST = 1 }
 	# other    trait_docile trait_conservational (trait_low_maintenance)  2 + 1 + (1)
+	# for cyborgs: loyalty_circuits durable streamlined_protocols
 	if = {
 		limit = {
 			owner = { has_origin = origin_overtuned }
 		}
 		gene_micromanage_try_add = { TRAIT = trait_low_maintenance COST = 1 }
 	}
+	# The best priority order of these cyborg traits is up for debate.
+	# The +10% happiness from loyalty circuits probably makes it the best IF the pop is not
+	# already at 100% happiness, then it's useless. Durable is good if you are short on amenities
+	# otherwise it's useless. Streamlined Protocols is good if you care about empire size, which I
+	# think is important, but the AI seems to love to add the opposite High Bandwidth...
+	# You could even argue that none of them are worth the 0.3 extra energy upkeep.
+	gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_loyalty_circuits COST = 1 }
+	gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_durable COST = 1 }
+	gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_streamlined_protocols COST = 1 }
 	gene_micromanage_try_add = { TRAIT = trait_docile COST = 2 }
 	if = {
 		limit = { NOT = { pop_has_trait = trait_hive_mind } }
@@ -712,9 +847,18 @@ gene_micromanage_add_traits = {
 	gene_micromanage_try_add = { TRAIT = trait_talented COST = 1 }
 }
 
+gene_micromanage_account_pick = {
+	if = {
+		limit = { pop_has_trait = $TRAIT$ }
+		subtract_variable = { which = available_trait_picks value = 1 }
+		subtract_variable = { which = unaccounted_trait_points value = $COST$ }
+	}
+}
+
 # Count the number of trait points and picks available for this pop and
 # save them to variables.
 gene_micromanage_count_traits = {
+	optimize_memory
 	# The modifiers are in the country scope, so grab them from there and
 	# copy the variables to the pop scope.
 	owner = {
@@ -741,20 +885,101 @@ gene_micromanage_count_traits = {
 	# Remove the ones already being used.
 	subtract_variable = { which = available_trait_points value = trigger:num_trait_points }
 	# zero-cost traits don't count against trait picks, but there doesn't seem to be a way to
-	# count them without having a hardcoded list of all the traits, so instead I'm assuming that
-	# one trait pick is used for each two trait points. This seems mostly fair since the traits
-	# that we don't remove in vanilla tend to be 2-3 points each.
-	export_trigger_value_to_variable = { trigger = num_trait_points variable = used_trait_picks }
-	divide_variable = { which = used_trait_picks value = 2 }
-	ceiling_variable = used_trait_picks
-	subtract_variable = { which = available_trait_picks value = used_trait_picks }
+	# count them without having a hardcoded list of all the traits, so we'll figure out the vanilla
+	# ones, and then assume that one trait pick is used for every remaining used trait point.
+	export_trigger_value_to_variable = { trigger = num_trait_points variable = unaccounted_trait_points }
+	
+	gene_micromanage_account_pick = { TRAIT = trait_adaptive COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_extremely_adaptive COST = 4 }
+	gene_micromanage_account_pick = { TRAIT = trait_agrarian COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_charismatic COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_conformists COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_docile COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_venerable COST = 4 }
+	gene_micromanage_account_pick = { TRAIT = trait_industrious COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_ingenious COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_intelligent COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_rapid_breeders COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_very_strong COST = 3 }
+	gene_micromanage_account_pick = { TRAIT = trait_thrifty COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_nonadaptive COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_repugnant COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_solitary COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_deviants COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_wasteful COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_unruly COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_fleeting COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_sedentary COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_slow_learners COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_slow_breeders COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_weak COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_quarrelsome COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_decadent COST = -1 }
+	
+	gene_micromanage_account_pick = { TRAIT = trait_lithoid_radiotrophic COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_advanced_radiotrophic COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_plantoid_radiotrophic COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_plantoid_budding COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_advanced_budding COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_lithoid_budding COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_lithoid_gaseous_byproducts COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_advanced_gaseous_byproducts COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_lithoid_scintillating COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_advanced_scintillating COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_lithoid_volatile_excretions COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_advanced_volatile_excretions COST = 2 }
 
-	# Deal with the edge case where we couldn't remove erudite, it's a 4 point pick so
-	# we will have miscounted it above.
-	if = {
-		limit = { pop_has_trait = trait_erudite }
-		change_variable = { which = available_trait_picks value = 1 }
-	}
+	gene_micromanage_account_pick = { TRAIT = trait_incubator COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_inorganic_breath COST = 3 }
+
+	gene_micromanage_account_pick = { TRAIT = trait_elevated_synapses COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_preplanned_growth COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_excessive_endurance COST = 3 }
+
+	gene_micromanage_account_pick = { TRAIT = trait_aquatic COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_nivlac COST = 2 }
+
+	gene_micromanage_account_pick = { TRAIT = trait_cyborg_efficient_processors COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_cyborg_bulky COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_cyborg_high_maintenance COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_cyborg_high_bandwidth COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_cyborg_neural_limiters COST = -2 }
+	gene_micromanage_account_pick = { TRAIT = trait_cyborg_power_intensive COST = -1 }
+
+	gene_micromanage_account_pick = { TRAIT = trait_delicious COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_felsic COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_natural_machinist COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_nerve_stapled COST = 3 }
+	gene_micromanage_account_pick = { TRAIT = trait_vat_grown COST = 3 }
+	gene_micromanage_account_pick = { TRAIT = trait_erudite COST = 4 }
+	gene_micromanage_account_pick = { TRAIT = trait_fertile COST = 4 }
+	gene_micromanage_account_pick = { TRAIT = trait_robust COST = 4 }
+
+	gene_micromanage_account_pick = { TRAIT = trait_drake_scaled COST = 3 }
+	gene_micromanage_account_pick = { TRAIT = trait_tiyanki COST = 3 }
+	gene_micromanage_account_pick = { TRAIT = trait_voidling COST = 3 }
+
+	gene_micromanage_account_pick = { TRAIT = trait_robot_domestic_protocols COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_efficient_processors COST = 3 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_enhanced_memory COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_harvesters COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_logic_engines COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_loyalty_circuits COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_power_drills COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_recycled COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_streamlined_protocols COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_superconductive COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_trading_algorithms COST = 2 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_bulky COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_high_maintenance COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_uncanny COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_repurposed_hardware COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_custom_made COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_luxurious COST = -1 }
+	gene_micromanage_account_pick = { TRAIT = trait_robot_high_bandwidth COST = -1 }
+
+	# Everything left is assumed to use one pick per point
+	subtract_variable = { which = available_trait_picks value = unaccounted_trait_points }
 }
 
 # Effect to micromanage the genes of the scoped pop
@@ -762,6 +987,7 @@ gene_micromanage_pop = {
 	if = {
 		limit = {
 			NOT = { pop_has_trait = trait_self_modified }
+			is_sapient = yes
 		}
 		# Remove all the traits that we are willing to remove.
 		gene_micromanage_remove_traits = yes
@@ -779,7 +1005,6 @@ gene_micromanage_pop = {
 			limit = {
 				check_variable = { which = available_trait_points value > 0 }
 				check_variable = { which = available_trait_picks value > 0 }
-				is_sapient = yes
 			}
 			gene_micromanage_add_traits = yes
 		}
@@ -793,7 +1018,7 @@ gene_micromanage_pop = {
 genemod_enhance_leader_genetic = {
 	if = {
 		limit = {
-			has_policy_flag = leader_enhancement_custom_genesculpting
+			owner = { has_policy_flag = leader_enhancement_custom_genesculpting }
 			NOT = { has_leader_flag = genemod_sculpted }
 			species = {
 				is_robotic = no
@@ -867,7 +1092,7 @@ genemod_enhance_leader_genetic = {
 genemod_enhance_leader_cybernetic = {
 	if = {
 		limit = {
-			has_policy_flag = leader_enhancement_custom_cybernetics
+			owner = { has_policy_flag = leader_enhancement_custom_cybernetics }
 			NOT = { has_leader_flag = genemod_cybersculpted }
 			species = {
 				is_robotic = no

@@ -42,3 +42,18 @@ pop_job_produces_trade = {
 		has_job = titan_hunter
 	}
 }
+
+can_genemod_cybernetic = {
+	owner = {
+		OR = {
+			has_tradition = tr_cybernetics_integrated_anatomy
+			has_tradition = tr_cybernetics_assimilator_integrated_anatomy
+		}
+	}
+}
+
+can_genemod_genetic = {
+	owner = {
+		has_tradition = tr_genetics_resequencing
+	}
+}

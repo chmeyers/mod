@@ -25,6 +25,7 @@ gene_micromanager = {
 		OR = {
 			has_active_tradition = tr_genetics_finish
 			has_active_tradition = tr_genetics_finish_extra_traits
+			has_active_tradition = tr_cybernetics_finish
 		}
 	}
 

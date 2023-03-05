@@ -5,17 +5,11 @@ leader_enhancement_custom_genesculpting_desc:0 "Leaders will undergo custom gene
 
 leader_enhancement_custom_cybernetics:0 "Bespoke Cybernetics"
 leader_enhancement_custom_cybernetics_name:0 "Bespoke Cybernetics"
-leader_enhancement_custom_cybernetics_desc:0 "Leaders will be given personally designed cybernetic modification to provide the optimal traits. If this policy is removed, existing leaders will revert to the main traits for their species."
+leader_enhancement_custom_cybernetics_desc:0 "Leaders will be given personally designed cybernetic modification as well as some custom genetic enhancement to provide the optimal traits. If this policy is removed, existing leaders will revert to the main traits for their species."
 
 leader_enhancement_custom_cybergenetics:0 "Personalized Cybro-Genesculpting"
-leader_enhancement_custom_cybergenetics_name:0 "Personalized Cybergenesculpting"
-leader_enhancement_custom_cybergenetics_desc:0 "Leaders will undergo custom cybernetic and genetic modification to provide the optimal traits. If this policy is removed, existing leaders will revert to the main traits for their species."
+leader_enhancement_custom_cybergenetics_name:0 "Personalized Cybro-Genesculpting"
+leader_enhancement_custom_cybergenetics_desc:0 "Leaders will undergo bespoke cybernetic enhancement and custom genetic modification to provide the optimal traits. If this policy is removed, existing leaders will revert to the main traits for their species."
 
-edict_gene_micromanager:0 "Genetic Micromanager"
-edict_gene_micromanager_desc:0 "Pops will be automatically modified to optimize them for the job that they are working while respecting the maximum trait limits and researched tech limitations. Each pop will be evaluated approximately once per decade. Habitability will be changed to match the planet on which they live if glandular acclimation has been researched and it would improve their habitability. Certain rare habitablity traits such as Tomb, Relic, and Ring World habitability will not be automatically removed. Traits from other ascension paths, such as Psionic, will not be touched."
-
-edict_cyber_micromanager:0 "Cybernetic Micromanager"
-edict_cyber_micromanager_desc:0 "Pops will be automatically modified to optimize them for the job that they are working while respecting the maximum trait limits and researched tech limitations. Each pop will be evaluated approximately once per decade. Habitability will be changed to match the planet on which they live if glandular acclimation has been researched and it would improve their habitability. Certain rare habitablity traits such as Tomb, Relic, and Ring World habitability will not be automatically removed. Traits from other ascension paths, such as Psionic, will not be touched."
-
-edict_cybergene_micromanager:0 "Cybro-Genetic Micromanager"
-edict_cybergene_micromanager_desc:0 "Pops will be automatically modified to optimize them for the job that they are working while respecting the maximum trait limits and researched tech limitations. Each pop will be evaluated approximately once per decade. Habitability will be changed to match the planet on which they live if glandular acclimation has been researched and it would improve their habitability. Certain rare habitablity traits such as Tomb, Relic, and Ring World habitability will not be automatically removed. Traits from other ascension paths, such as Psionic, will not be touched."
+edict_gene_micromanager:0 "Species Trait Micromanager"
+edict_gene_micromanager_desc:0 "Pops will be automatically modified to optimize them for the job that they are working while respecting the maximum trait limits and researched tech limitations. Genetic/Cybernetic traits will only be added/removed if you have unlocked the associated ascension. Each pop will be evaluated approximately once per decade. Habitability will be changed to match the planet on which they live if glandular acclimation has been researched and it would improve their habitability. Certain rare habitablity traits such as Tomb or Habitat habitability will not be automatically removed. Traits from other ascension paths, such as Psionic, will not be touched."
