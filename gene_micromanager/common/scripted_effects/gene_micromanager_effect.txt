@@ -1158,6 +1158,8 @@ gene_micromanage_pop = {
 	if = {
 		limit = {
 			NOT = { pop_has_trait = trait_self_modified }
+			NOT = { pop_has_trait = trait_clone_soldier_infertile }
+			NOT = { pop_has_trait = trait_clone_soldier_infertile_full_potential }
 			is_sapient = yes
 		}
 		# Remove all the traits that we are willing to remove.
