@@ -1,3 +1,10 @@
+
+# For compatibitilty with leader species trait mod.
+has_leader_species_traits_active = {
+	optimize_memory
+	always = no
+}
+
 pop_job_produces_amenities = {
 	# All ruler jobs seem to create amenities
 	OR = {

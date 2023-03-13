@@ -17,5 +17,15 @@ on_modification_complete = {
 on_monthly_pulse_country = {
 	events = {
 		gene_micromanager_mod.1 # Run Gene Micromanager if the edict is active
+		gene_micromanager_mod.2 # Run Leader enhancement
+	}
+}
+
+
+# fired when another mod's custom code changes a leader's species.
+# this = leader, post-modification
+# from = species, pre-modification (if known)
+on_leader_species_changed = {
+	events = {
 	}
 }

@@ -26,6 +26,57 @@ gene_micromanager = {
 			has_active_tradition = tr_genetics_finish
 			has_active_tradition = tr_genetics_finish_extra_traits
 			has_active_tradition = tr_cybernetics_finish
+			AND = {
+				has_active_tradition = tr_psionics_finish
+				has_technology = tech_gene_tailoring
+			}
+		}
+	}
+
+	# No effects listed here because the monthly pulse on_action will
+	# check that the edict is active and trigger the event.
+
+	allow = {}
+
+	ai_weight = {
+		weight = 0
+	}
+}
+
+robotic_micromanager = {
+	length = -1
+	icon = "GFX_edict_type_time"
+	resources = {
+		category = edicts
+
+		cost = {
+			unity = 1500
+		}
+
+		cost = {
+			unity = 10
+			multiplier = value:edict_robotic_pop_size_effect
+		}
+
+		upkeep = {
+			unity = 1
+			multiplier = value:edict_robotic_pop_size_effect
+		}
+	}
+
+	potential = {
+		# They need Robomodding + any ascension tradition.
+		OR = {
+			has_technology = tech_robomodding
+			has_technology = tech_robomodding_m
+		}
+		OR = {
+			has_active_tradition = tr_genetics_finish
+			has_active_tradition = tr_genetics_finish_extra_traits
+			has_active_tradition = tr_cybernetics_finish
+			has_active_tradition = tr_psionics_finish
+			has_active_tradition = tr_synthetics_finish
+			has_active_tradition = tr_synthetics_finish_machine
 		}
 	}
 

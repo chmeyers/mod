@@ -73,6 +73,7 @@ country_event = {
 		OR = {
 			has_policy_flag = leader_enhancement_custom_genesculpting
 			has_policy_flag = leader_enhancement_custom_cybernetics
+			has_policy_flag = leader_enhancement_custom_psionics
 		}
 	}
 
@@ -80,11 +81,15 @@ country_event = {
 		every_owned_leader = {
 			genemod_enhance_leader_genetic = yes
 			genemod_enhance_leader_cybernetic = yes
+			genemod_enhance_leader_psionic = yes
+			genemod_enhance_leader_robotic = yes
 		}
 		# Same thing for pool leaders
 		every_pool_leader = {
 			genemod_enhance_leader_genetic = yes
 			genemod_enhance_leader_cybernetic = yes
+			genemod_enhance_leader_psionic = yes
+			genemod_enhance_leader_robotic = yes
 		}
 		# Set the leader erudite traits
 		country_event = { id = utopia.2508 }
@@ -100,6 +105,7 @@ country_event = {
 	trigger = {
 		NOT = { has_policy_flag = leader_enhancement_custom_genesculpting }
 		NOT = { has_policy_flag = leader_enhancement_custom_cybernetics }
+		NOT = { has_policy_flag = leader_enhancement_custom_psionics }
 	}
 
 	immediate = {
@@ -108,6 +114,8 @@ country_event = {
 				OR = {
 					has_leader_flag = genemod_sculpted
 					has_leader_flag = genemod_cybersculpted
+					has_leader_flag = genemod_psisculpted
+					has_leader_flag = genemod_robosculpted
 				}
 			}
 			save_event_target_as = genmod_sculpt_undo
@@ -129,6 +137,8 @@ country_event = {
 							change_species = prev
 							remove_leader_flag = genemod_sculpted
 							remove_leader_flag = genemod_cybersculpted
+							remove_leader_flag = genemod_psisculpted
+							remove_leader_flag = genemod_robosculpted
 						}
 					}
 				}
@@ -143,6 +153,8 @@ country_event = {
 						change_species = prev
 						remove_leader_flag = genemod_sculpted
 						remove_leader_flag = genemod_cybersculpted
+						remove_leader_flag = genemod_psisculpted
+						remove_leader_flag = genemod_robosculpted
 					}
 				}
 				# Else: They don't own any pops of the leader's species.
@@ -156,6 +168,8 @@ country_event = {
 				OR = {
 					has_leader_flag = genemod_sculpted
 					has_leader_flag = genemod_cybersculpted
+					has_leader_flag = genemod_psisculpted
+					has_leader_flag = genemod_robosculpted
 				}
 			}
 			save_event_target_as = genmod_sculpt_undo
@@ -177,6 +191,8 @@ country_event = {
 							change_species = prev
 							remove_leader_flag = genemod_sculpted
 							remove_leader_flag = genemod_cybersculpted
+							remove_leader_flag = genemod_psisculpted
+							remove_leader_flag = genemod_robosculpted
 						}
 					}
 				}
@@ -191,6 +207,8 @@ country_event = {
 						change_species = prev
 						remove_leader_flag = genemod_sculpted
 						remove_leader_flag = genemod_cybersculpted
+						remove_leader_flag = genemod_psisculpted
+						remove_leader_flag = genemod_robosculpted
 					}
 				}
 				# Else: They don't own any pops of the leader's species.

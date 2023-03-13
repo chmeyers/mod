@@ -64,3 +64,69 @@ micromanager_pops_per_month = {
 	min = 1
 }
 
+
+# Same as above, but for non-organics
+genemod_num_robotic_pops = {
+	complex_trigger_modifier = {
+		trigger = count_owned_pop
+		parameters = {
+			limit = {
+				OR = {
+					species = { is_robotic = yes }
+					pop_has_trait = trait_mechanical
+				}
+			}
+		}
+		mode = add
+	}
+}
+
+genemod_num_robotic_unmanaged_pops = {
+	complex_trigger_modifier = {
+		trigger = count_owned_pop
+		parameters = {
+			limit = {
+				OR = {
+					species = { is_robotic = yes }
+					pop_has_trait = trait_mechanical
+				}
+				NOT = { has_pop_flag = gene_micromanaged_once }
+			}
+		}
+		mode = add
+	}
+}
+
+# This value will be 0 once 100% of pops have been micromanaged once
+# and increase linearly to 1 at 90%, capped there.
+genemod_capped_unmanaged_robot_pops_mult = {
+	add = value:genemod_num_robotic_unmanaged_pops
+	divide = value:genemod_num_robotic_pops
+	multiply = 10
+	max = 1
+}
+
+# This represents the cost paid when >10% of your robotic population
+# remains unmodified. Either the edict has not had the chance to 
+# get through your population once or you just got a large influx of
+# new pops from somewhere.
+edict_robotic_startup_cost_effect = {
+	base = 1 # 120 unity per pop / 120 months
+	mult = value:genemod_num_robotic_pops
+	mult = value:genemod_capped_unmanaged_robot_pops_mult # capped at 1
+}
+
+# Balanced to take 10 years to transform every owned non-robotic pop.
+edict_robotic_pop_size_effect = {
+	base = 0.083 # 10 unity cost / 120 months
+	mult = value:genemod_num_robotic_pops
+	add = value:edict_robotic_startup_cost_effect
+}
+
+micromanager_robotic_pops_per_month = {
+	base = 0
+	add = value:genemod_num_robotic_pops
+	divide = 120
+	round = yes
+	min = 1
+}
