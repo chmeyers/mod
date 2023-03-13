@@ -8,29 +8,45 @@ gene_micromanager = {
 
 		cost = {
 			unity = 3000
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_genetics_retrovirus
+			}
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_cybernetics_modular_cybernetics
+			}
 		}
 
 		cost = {
 			unity = 10
 			multiplier = value:edict_organic_pop_size_effect
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_genetics_retrovirus
+			}
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_cybernetics_modular_cybernetics
+			}
 		}
 
 		upkeep = {
 			unity = 1
 			multiplier = value:edict_organic_pop_size_effect
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_genetics_retrovirus
+			}
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_cybernetics_modular_cybernetics
+			}
 		}
 	}
 
 	potential = {
-		OR = {
-			has_active_tradition = tr_genetics_finish
-			has_active_tradition = tr_genetics_finish_extra_traits
-			has_active_tradition = tr_cybernetics_finish
-			AND = {
-				has_active_tradition = tr_psionics_finish
-				has_technology = tech_gene_tailoring
-			}
-		}
+		has_technology = tech_gene_tailoring
 	}
 
 	# No effects listed here because the monthly pulse on_action will
@@ -51,33 +67,37 @@ robotic_micromanager = {
 
 		cost = {
 			unity = 1500
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_synthetics_prefabricated_components
+			}
 		}
 
 		cost = {
 			unity = 10
 			multiplier = value:edict_robotic_pop_size_effect
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_synthetics_prefabricated_components
+			}
 		}
 
 		upkeep = {
 			unity = 1
 			multiplier = value:edict_robotic_pop_size_effect
+			modifier = {
+				factor = 0.5
+				has_tradition = tr_synthetics_prefabricated_components
+			}
 		}
 	}
 
 	potential = {
-		# They need Robomodding + any ascension tradition.
+		# They need Robomodding
 		NOT = { has_policy_flag = ai_outlawed }
 		OR = {
 			has_technology = tech_robomodding
 			has_technology = tech_robomodding_m
-		}
-		OR = {
-			has_active_tradition = tr_genetics_finish
-			has_active_tradition = tr_genetics_finish_extra_traits
-			has_active_tradition = tr_cybernetics_finish
-			has_active_tradition = tr_psionics_finish
-			has_active_tradition = tr_synthetics_finish
-			has_active_tradition = tr_synthetics_finish_machine
 		}
 	}
 

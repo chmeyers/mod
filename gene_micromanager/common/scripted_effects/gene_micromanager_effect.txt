@@ -235,10 +235,6 @@ gene_micromanage_remove_traits = {
 			remove_trait = trait_cyborg_high_bandwidth
 			remove_trait = trait_cyborg_trading_algorithms
 		}
-		if = {
-			limit = { NOT = { can_genemod_genetic = yes } }
-			gene_micromanage_try_remove_traits = yes
-		}
 	}
 	# Remove Overtuned traits only if we can add them back.
 	if = {
@@ -262,6 +258,11 @@ gene_micromanage_remove_traits = {
 			remove_trait = trait_preplanned_growth
 			remove_trait = trait_excessive_endurance
 		}
+	}
+	# Try to remove any genetic traits that we couldn't remove above by matching templates.
+	if = {
+		limit = { NOT = { can_genemod_genetic = yes } }
+		gene_micromanage_try_remove_traits = yes
 	}
 }
 
