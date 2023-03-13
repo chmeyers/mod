@@ -1162,25 +1162,6 @@ gene_micromanage_count_traits = {
 	gene_micromanage_account_pick = { TRAIT = trait_tiyanki COST = 3 }
 	gene_micromanage_account_pick = { TRAIT = trait_voidling COST = 3 }
 
-	gene_micromanage_account_pick = { TRAIT = trait_robot_domestic_protocols COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_efficient_processors COST = 3 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_enhanced_memory COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_harvesters COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_logic_engines COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_loyalty_circuits COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_power_drills COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_recycled COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_streamlined_protocols COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_superconductive COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_trading_algorithms COST = 2 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_bulky COST = -1 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_high_maintenance COST = -1 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_uncanny COST = -1 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_repurposed_hardware COST = -1 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_custom_made COST = -1 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_luxurious COST = -1 }
-	gene_micromanage_account_pick = { TRAIT = trait_robot_high_bandwidth COST = -1 }
-
 	# Everything left is assumed to use one pick per point
 	subtract_variable = { which = available_trait_picks value = unaccounted_trait_points }
 }
@@ -1466,16 +1447,18 @@ genemod_enhance_leader_robotic = {
 	if = {
 		limit = {
 			owner = { has_policy_flag = leader_enhancement_custom_robots }
+			NOT = { owner = { has_policy_flag = ai_outlawed } }
 			NOT = { has_leader_flag = genemod_robosculpted }
 			OR = {
 				owner = { has_technology = tech_robomodding }
 				owner = { has_technology = tech_robomodding_m }
 			}
+			OR = {
+				owner = { has_authority = auth_machine_intelligence }
+				owner = { has_technology = tech_synthetic_leaders }
+			}
 			species = {
-				OR = {
-					is_robotic = yes
-					has_trait = trait_mechanical
-				}
+				is_robotic = yes
 			}
 		}
 		species = {
@@ -1502,6 +1485,269 @@ genemod_enhance_leader_robotic = {
 					from = event_target:leader_previous_species
 				}
 			}
+		}
+	}
+}
+
+# Remove every trait that we are willing to remove to leave a 
+# clean slate for customization.
+robot_micromanage_remove_traits = {
+	optimize_memory
+	modify_species = {
+		species = this
+		change_scoped_species = yes
+		remove_trait = trait_robot_power_drills
+		remove_trait = trait_robot_harvesters
+		remove_trait = trait_robot_superconductive
+		remove_trait = trait_robot_efficient_processors
+		remove_trait = trait_robot_double_jointed
+		remove_trait = trait_robot_emotion_emulators
+		remove_trait = trait_robot_durable
+		remove_trait = trait_robot_mass_produced
+		remove_trait = trait_robot_recycled
+		remove_trait = trait_robot_streamlined_protocols
+		# Droid Worker Traits
+		remove_trait = trait_robot_logic_engines
+		remove_trait = trait_robot_propaganda_machines
+		remove_trait = trait_robot_trading_algorithms
+		# Specialist Synthetics Traits
+		remove_trait = trait_robot_loyalty_circuits
+		# Robotic Leader Traits
+		remove_trait = trait_robot_enhanced_memory
+		remove_trait = trait_robot_learning_algorithms
+		# Negative Traits
+		remove_trait = trait_robot_bulky
+		remove_trait = trait_robot_uncanny
+		remove_trait = trait_robot_high_maintenance
+		remove_trait = trait_robot_repurposed_hardware
+		remove_trait = trait_robot_custom_made
+		remove_trait = trait_robot_luxurious
+		remove_trait = trait_robot_high_bandwidth
+	}
+
+	# Remove Domestic Protocols only if they aren't currently a Servant,
+	# as doing so would make them ineligible for their current job.
+	if = {
+		limit = {
+			pop_has_trait = trait_robot_domestic_protocols
+			NOT = { has_job = servant }
+		}
+		modify_species = {
+			species = this
+			change_scoped_species = yes
+			remove_trait = trait_robot_domestic_protocols
+		}
+	}
+}
+
+# Count the number of trait points and picks available for this pop and
+# save them to variables.
+robot_micromanage_count_traits = {
+	optimize_memory
+	# The modifiers are in the country scope, so grab them from there and
+	# copy the variables to the pop scope.
+	if = {
+		limit = {
+			owner = { has_authority = auth_machine_intelligence }
+		}
+		owner = {
+			export_modifier_to_variable = {
+				modifier = MACHINE_species_trait_points_add
+				variable = genemod_available_trait_points
+			}
+			export_modifier_to_variable = {
+				modifier = MACHINE_species_trait_picks_add
+				variable = genemod_available_trait_picks
+			}
+		}
+		set_variable = { which = available_trait_points value = owner.genemod_available_trait_points }
+		# Machine Empires start with 1 point and 5 picks.
+		change_variable = { which = available_trait_points value = 1 }
+		set_variable = { which = available_trait_picks value = owner.genemod_available_trait_picks }
+		change_variable = { which = available_trait_picks value = 5 }
+	}
+	else = {
+		owner = {
+			export_modifier_to_variable = {
+				modifier = ROBOT_species_trait_points_add
+				variable = genemod_available_trait_points
+			}
+			export_modifier_to_variable = {
+				modifier = ROBOT_species_trait_picks_add
+				variable = genemod_available_trait_picks
+			}
+		}
+		# Robots start with 0 points and 4 picks
+		set_variable = { which = available_trait_points value = owner.genemod_available_trait_points }
+		set_variable = { which = available_trait_picks value = owner.genemod_available_trait_picks }
+		change_variable = { which = available_trait_picks value = 4 }
+	}
+	
+
+	# Remove the ones already being used.
+	subtract_variable = { which = available_trait_points value = trigger:num_trait_points }
+	# zero-cost traits don't count against trait picks, but there doesn't seem to be a way to
+	# count them without having a hardcoded list of all the traits, so we'll figure out the vanilla
+	# ones, and then assume that one trait pick is used for every remaining used trait point.
+	export_trigger_value_to_variable = { trigger = num_trait_points variable = unaccounted_trait_points }
+	
+	# Before calling this function we removed every possible vanilla trait with the possible exception
+	# of Domestic Protocols, so that's the only one we check for.
+	gene_micromanage_account_pick = { TRAIT = trait_robot_domestic_protocols COST = 2 }
+
+	# Everything left is assumed to use one pick per point
+	subtract_variable = { which = available_trait_picks value = unaccounted_trait_points }
+}
+
+robot_micromanage_add_negatives = {
+	# TODO: Add Negatives
+	# Negative Traits
+	# trait_robot_bulky -1
+	# trait_robot_uncanny -1
+	# trait_robot_high_maintenance -1
+	# trait_robot_repurposed_hardware -1
+	# trait_robot_custom_made -1
+	# trait_robot_luxurious -2
+	# trait_robot_high_bandwidth -2
+}
+
+robot_micromanage_try_add = {
+	if = {
+		limit = {
+			NOT = { has_trait = $TRAIT$ }
+		}
+		# Add negatives if needed.
+		robot_micromanage_add_negatives = { WANT = $COST$ }
+		if = {
+			limit = {
+				check_variable = { which = available_trait_points value >= $COST$ }
+				check_variable = { which = available_trait_picks value >= 1 }
+			}
+			# Go ahead and add it.
+			modify_species = {
+				species = this
+				change_scoped_species = yes
+				add_trait = $TRAIT$
+			}
+			subtract_variable = { which = available_trait_points value = $COST$ }
+			subtract_variable = { which = available_trait_picks value = 1 }
+		}
+	}
+}
+
+# Add traits back
+robot_micromanage_add_traits = {
+	# research
+	if = {
+		limit = {
+			can_add_droid_traits = yes
+			OR = {
+				pop_produces_resource = { type = society_research amount > 0}
+				pop_produces_resource = { type = engineering_research amount > 0}
+				pop_produces_resource = { type = physics_research amount > 0}
+			}
+		}
+		robot_micromanage_try_add = { TRAIT = trait_robot_logic_engines COST = 2 }
+	}
+	# unity
+	if = {
+		limit = {
+			can_add_droid_traits = yes
+			NOT = { owner = { has_authority = auth_machine_intelligence } }
+			pop_produces_resource = { type = unity amount > 0}
+		}
+		robot_micromanage_try_add = { TRAIT = trait_robot_propaganda_machines COST = 1 }
+	}
+	# minerals
+	if = {
+		limit = { pop_produces_resource = { type = minerals amount > 0} }
+		robot_micromanage_try_add = { TRAIT = trait_robot_power_drills COST = 2 }
+	}
+	# energy
+	if = {
+		limit = { pop_produces_resource = { type = energy amount > 0} }
+		robot_micromanage_try_add = { TRAIT = trait_robot_superconductive COST = 2 }
+	}
+	# food
+	if = {
+		limit = {
+			NOT = { owner = { has_authority = auth_machine_intelligence } }
+			pop_produces_resource = { type = energy amount > 0}
+		}
+		robot_micromanage_try_add = { TRAIT = trait_robot_harvesters COST = 2 }
+	}
+	# trade_value
+	if = {
+		limit = {
+			can_add_droid_traits = yes
+			NOT = { owner = { has_authority = auth_machine_intelligence } }
+			pop_job_produces_trade = yes
+		}
+		robot_micromanage_try_add = { TRAIT = trait_robot_trading_algorithms COST = 2 }
+	}
+	# amenities
+	if = {
+		limit = {
+			pop_job_produces_amenities = yes
+		}
+		if = {
+			limit = { owner = { has_authority = auth_machine_intelligence } }
+			robot_micromanage_try_add = { TRAIT = trait_robot_emotion_emulators COST = 1 }
+		}
+		else_if = {
+			limit = { can_add_droid_traits = yes }
+			robot_micromanage_try_add = { TRAIT = trait_robot_domestic_protocols COST = 2 }
+		}
+	}
+	# worker
+	# all_jobs
+	# slave/servant/unemployed
+	# other
+
+	# remove_trait = trait_robot_power_drills
+	# remove_trait = trait_robot_harvesters
+	# remove_trait = trait_robot_superconductive
+	# remove_trait = trait_robot_efficient_processors
+	# remove_trait = trait_robot_double_jointed
+	# remove_trait = trait_robot_emotion_emulators
+	# remove_trait = trait_robot_durable
+	# remove_trait = trait_robot_mass_produced
+	# remove_trait = trait_robot_recycled
+	# remove_trait = trait_robot_streamlined_protocols
+	# # Droid Worker Traits
+	# remove_trait = trait_robot_logic_engines
+	# remove_trait = trait_robot_propaganda_machines
+	# remove_trait = trait_robot_trading_algorithms
+	# # Specialist Synthetics Traits
+	# remove_trait = trait_robot_loyalty_circuits
+	
+}
+
+robot_micromanage_pop = {
+	if = {
+		limit = {
+			NOT = { pop_has_trait = trait_self_modified }
+			OR = {
+				# Robotic species should always have one of these two.
+				# If they don't, we don't touch them as they might be something weird
+				# that this mod doesn't know how to deal with.
+				pop_has_trait = trait_mechanical
+				pop_has_trait = trait_machine_unit
+			}
+		}
+		# Remove all the traits that we are willing to remove.
+		robot_micromanage_remove_traits = yes
+
+		# Count how many picks and points we have available.
+		robot_micromanage_count_traits = yes
+
+		# Pick traits.
+		if = {
+			limit = {
+				check_variable = { which = available_trait_points value > 0 }
+				check_variable = { which = available_trait_picks value > 0 }
+			}
+			robot_micromanage_add_traits = yes
 		}
 	}
 }

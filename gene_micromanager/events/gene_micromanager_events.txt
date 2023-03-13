@@ -57,6 +57,9 @@ country_event = {
 			}
 			# No pops haven't been micromanaged yet. Clear all the flags and start a new pass.
 			every_owned_pop = {
+				limit = {
+					species = { is_robotic = no }
+				}
 				remove_pop_flag = gene_micromanaged
 			}
 		}
@@ -253,6 +256,56 @@ planet_event = {
 				species = { is_robotic = no }
 			}
 			gene_micromanage_pop = yes
+		}
+	}
+}
+
+
+# Robot Edict Enabled
+country_event = {
+	id = gene_micromanager_mod.7
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		# Called by the monthly pulse, but have to make sure the edict is active.
+		has_edict = robotic_micromanager
+	}
+
+	immediate = {
+		while = {
+			count = value:micromanager_robotic_pops_per_month
+			random_owned_pop = {
+				limit = {
+					NOT = { has_pop_flag = gene_micromanaged }
+					species = { is_robotic = yes }
+				}
+				weights = {
+					base = 1
+					modifier = {
+						add = 100
+						NOT = { has_pop_flag = gene_micromanaged_once }
+					}
+				}
+				robot_micromanage_pop = yes
+				set_pop_flag = gene_micromanaged
+				set_pop_flag = gene_micromanaged_once
+			}
+		}
+		if = {
+			limit = {
+				NOT = { any_owned_pop = {
+						NOT = { has_pop_flag = gene_micromanaged }
+						species = { is_robotic = yes }
+				} }
+			}
+			# No pops haven't been micromanaged yet. Clear all the flags and start a new pass.
+			every_owned_pop = {
+				limit = {
+					species = { is_robotic = yes }
+				}
+				remove_pop_flag = gene_micromanaged
+			}
 		}
 	}
 }

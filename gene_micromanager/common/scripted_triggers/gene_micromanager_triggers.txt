@@ -28,10 +28,16 @@ pop_job_produces_amenities = {
 		has_job = overlord_mortal_initiate
 		has_job = maintenance_drone
 		has_job = synapse_drone
+		has_job = spawning_drone
+		has_job = offspring_drone
+		has_job = crucible_drone
+		has_job = evaluator
+		has_job = chronicle_drone
 
 		#with agrarian idyll: pearl_diver, farmer, angler
 		# if materialist: culture worker and death chronicler
 		#technically colonist, but we don't list it as it's a temp job
+		#With pleasure seeker: slave_overseer
 	}
 }
 
@@ -62,5 +68,32 @@ can_genemod_cybernetic = {
 can_genemod_genetic = {
 	owner = {
 		has_tradition = tr_genetics_resequencing
+	}
+}
+
+can_add_droid_traits = {
+	owner = {
+		OR = {
+			has_authority = auth_machine_intelligence
+			has_technology = tech_droid_workers
+		}
+		NOT = { has_policy_flag = ai_outlawed }
+	}
+}
+
+can_add_synth_traits = {
+	owner = {
+		has_technology = tech_synthetic_workers
+		NOT = { has_policy_flag = ai_outlawed }
+	}
+}
+
+can_add_synth_leader_traits = {
+	owner = {
+		OR = {
+			has_authority = auth_machine_intelligence
+			has_technology = tech_synthetic_leaders
+		}
+		NOT = { has_policy_flag = ai_outlawed }
 	}
 }

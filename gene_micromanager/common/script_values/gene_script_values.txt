@@ -71,10 +71,7 @@ genemod_num_robotic_pops = {
 		trigger = count_owned_pop
 		parameters = {
 			limit = {
-				OR = {
-					species = { is_robotic = yes }
-					pop_has_trait = trait_mechanical
-				}
+				species = { is_robotic = yes }
 			}
 		}
 		mode = add
@@ -86,10 +83,7 @@ genemod_num_robotic_unmanaged_pops = {
 		trigger = count_owned_pop
 		parameters = {
 			limit = {
-				OR = {
-					species = { is_robotic = yes }
-					pop_has_trait = trait_mechanical
-				}
+				species = { is_robotic = yes }
 				NOT = { has_pop_flag = gene_micromanaged_once }
 			}
 		}

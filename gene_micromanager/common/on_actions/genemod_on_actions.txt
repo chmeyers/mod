@@ -18,6 +18,7 @@ on_monthly_pulse_country = {
 	events = {
 		gene_micromanager_mod.1 # Run Gene Micromanager if the edict is active
 		gene_micromanager_mod.2 # Run Leader enhancement
+		gene_micromanager_mod.7 # Run Robot Micromanager if the edict is active
 	}
 }
 

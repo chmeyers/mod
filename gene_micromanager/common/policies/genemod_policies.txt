@@ -264,6 +264,7 @@ leader_enhancement = {
 		}
 
 		potential = {
+			NOT = { has_policy_flag = ai_outlawed }
 			OR = {
 				has_technology = tech_robomodding
 				has_technology = tech_robomodding_m

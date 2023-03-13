@@ -66,6 +66,7 @@ robotic_micromanager = {
 
 	potential = {
 		# They need Robomodding + any ascension tradition.
+		NOT = { has_policy_flag = ai_outlawed }
 		OR = {
 			has_technology = tech_robomodding
 			has_technology = tech_robomodding_m
