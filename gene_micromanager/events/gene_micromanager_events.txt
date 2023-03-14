@@ -235,10 +235,18 @@ country_event = {
 
 	immediate = {
 		every_owned_pop = {
-			limit = {
-				species = { is_robotic = no }
+			if = {
+				limit = {
+					species = { is_robotic = no }
+				}
+				gene_micromanage_pop = yes
 			}
-			gene_micromanage_pop = yes
+			if = {
+				limit = {
+					species = { is_robotic = yes }
+				}
+				robot_micromanage_pop = yes
+			}
 		}
 	}
 }
@@ -252,10 +260,18 @@ planet_event = {
 
 	immediate = {
 		every_owned_pop = {
-			limit = {
-				species = { is_robotic = no }
+			if = {
+				limit = {
+					species = { is_robotic = no }
+				}
+				gene_micromanage_pop = yes
 			}
-			gene_micromanage_pop = yes
+			if = {
+				limit = {
+					species = { is_robotic = yes }
+				}
+				robot_micromanage_pop = yes
+			}
 		}
 	}
 }

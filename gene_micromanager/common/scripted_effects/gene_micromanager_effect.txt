@@ -1,5 +1,14 @@
 
 
+# Cleanup our variables
+gene_micromanage_cleanup = {
+	clear_variable = possible_trait_points
+	clear_variable = available_trait_picks
+	clear_variable = needed_trait_points
+	clear_variable = possible_trait_picks
+	clear_variable = unaccounted_trait_points
+	clear_variable = available_trait_points
+}
 
 # Remove a trait iff they own a subspecies that does not have that trait.
 gene_micromanage_try_remove_trait = {
@@ -1200,6 +1209,8 @@ gene_micromanage_pop = {
 
 		# Set ideal habitability if we aren't already at 100%.
 		gene_micromanage_habitability = yes
+
+		gene_micromanage_cleanup = yes
 	}
 }
 
@@ -1613,7 +1624,6 @@ robot_micromanage_add_trait = {
 }
 
 robot_micromanage_add_negatives = {
-	# TODO: Add Negatives
 	# Negative Traits
 	# We never add trait_robot_custom_made, it's just not worth it.
 	# Everything else is situation dependent.
@@ -1656,33 +1666,30 @@ robot_micromanage_add_negatives = {
 				}
 				robot_micromanage_add_trait = { TRAIT = trait_robot_uncanny COST = -1 }
 			}
-			[[ !ADDING_trait_robot_double_jointed ]
 			else_if = {
 				limit = {
 					NOT = { pop_has_trait = trait_robot_bulky }
 					NOT = { pop_has_trait = trait_robot_double_jointed }
+					NOT = { has_pop_flag = ADDING_trait_robot_double_jointed }
 				}
 				robot_micromanage_add_trait = { TRAIT = trait_robot_bulky COST = -1 }
 			}
-			]
-			[[ !ADDING_trait_robot_mass_produced ]
 			else_if = {
 				limit = {
 					NOT = { pop_has_trait = trait_robot_custom_made }
 					NOT = { pop_has_trait = trait_robot_mass_produced }
+					NOT = { has_pop_flag = ADDING_trait_robot_mass_produced }
 				}
 				robot_micromanage_add_trait = { TRAIT = trait_robot_custom_made COST = -1 }
 			}
-			]
-			[[ !ADDING_trait_robot_durable ]
 			else_if = {
 				limit = {
 					NOT = { pop_has_trait = trait_robot_high_maintenance }
 					NOT = { pop_has_trait = trait_robot_durable }
+					NOT = { has_pop_flag = ADDING_trait_robot_durable }
 				}
 				robot_micromanage_add_trait = { TRAIT = trait_robot_high_maintenance COST = -1 }
 			}
-			]
 		}
 
 		if = {
@@ -1693,30 +1700,29 @@ robot_micromanage_add_negatives = {
 			}
 			# Go through and figure out if we can add enough points to let us add the positive
 			# trait that we want. If we can't, don't add anything.
-			[[ !ADDING_trait_robot_streamlined_protocols ]
 			if = {
 				limit = {
 					check_variable = { which = possible_trait_picks value >= 1 }
 					NOT = { pop_has_trait = trait_robot_high_bandwidth }
 					NOT = { pop_has_trait = trait_robot_streamlined_protocols }
+					NOT = { has_pop_flag = ADDING_trait_robot_streamlined_protocols }
 				}
 				change_variable = { which = possible_trait_points value = 2 }
 				subtract_variable = { which = possible_trait_picks value = 1 }
 			}
-			]
-			[[ !ADDING_trait_robot_recycled ]
 			if = {
 				limit = {
 					check_variable = { which = possible_trait_picks value >= 1 }
 					NOT = { pop_has_trait = trait_robot_luxurious }
 					NOT = { pop_has_trait = trait_robot_recycled }
+					NOT = { has_pop_flag = ADDING_trait_robot_recycled }
 				}
 				change_variable = { which = possible_trait_points value = 2 }
 				subtract_variable = { which = possible_trait_picks value = 1 }
 			}
-			]
 			if = {
 				limit = {
+					check_variable = { which = possible_trait_picks value >= 1 }
 					can_add_synth_leader_traits = yes
 					NOT = { pop_has_trait = trait_robot_repurposed_hardware }
 					NOT = { pop_has_trait = trait_robot_learning_algorithms }
@@ -1726,6 +1732,7 @@ robot_micromanage_add_negatives = {
 			}
 			if = {
 				limit = {
+					check_variable = { which = possible_trait_picks value >= 1 }
 					is_species_class = MACHINE
 					NOT = { pop_has_trait = trait_robot_uncanny }
 					NOT = { pop_has_trait = trait_robot_emotion_emulators }
@@ -1734,62 +1741,60 @@ robot_micromanage_add_negatives = {
 				change_variable = { which = possible_trait_points value = 1 }
 				subtract_variable = { which = possible_trait_picks value = 1 }
 			}
-			[[ !ADDING_trait_robot_double_jointed ]
 			if = {
 				limit = {
+					check_variable = { which = possible_trait_picks value >= 1 }
 					NOT = { pop_has_trait = trait_robot_bulky }
 					NOT = { pop_has_trait = trait_robot_double_jointed }
+					NOT = { has_pop_flag = ADDING_trait_robot_double_jointed }
 				}
 				change_variable = { which = possible_trait_points value = 1 }
 				subtract_variable = { which = possible_trait_picks value = 1 }
 			}
-			]
-			[[ !ADDING_trait_robot_mass_produced ]
 			if = {
 				limit = {
+					check_variable = { which = possible_trait_picks value >= 1 }
 					NOT = { pop_has_trait = trait_robot_custom_made }
 					NOT = { pop_has_trait = trait_robot_mass_produced }
+					NOT = { has_pop_flag = ADDING_trait_robot_mass_produced }
 				}
 				change_variable = { which = possible_trait_points value = 1 }
 				subtract_variable = { which = possible_trait_picks value = 1 }
 			}
-			]
-			[[ !ADDING_trait_robot_durable ]
 			if = {
 				limit = {
+					check_variable = { which = possible_trait_picks value >= 1 }
 					NOT = { pop_has_trait = trait_robot_high_maintenance }
 					NOT = { pop_has_trait = trait_robot_durable }
+					NOT = { has_pop_flag = ADDING_trait_robot_durable}
 				}
 				change_variable = { which = possible_trait_points value = 1 }
 				subtract_variable = { which = possible_trait_picks value = 1 }
 			}
-			]
 
 			if = {
 				limit = {
 					check_variable = { which = possible_trait_points value >= $WANT$ }
 				}
 				# We can do it. Now actually add them.
-				[[ !ADDING_trait_robot_streamlined_protocols ]
 				if = {
 					limit = {
 						NOT = { pop_has_trait = trait_robot_high_bandwidth }
 						NOT = { pop_has_trait = trait_robot_streamlined_protocols }
+						NOT = { has_pop_flag = ADDING_trait_robot_streamlined_protocols }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
 					robot_micromanage_add_trait = { TRAIT = trait_robot_high_bandwidth COST = -2 }
 				}
-				]
-				[[ !ADDING_trait_robot_recycled ]
 				if = {
 					limit = {
 						NOT = { pop_has_trait = trait_robot_luxurious }
 						NOT = { pop_has_trait = trait_robot_recycled }
+						NOT = { has_pop_flag = ADDING_trait_robot_recycled }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
 					robot_micromanage_add_trait = { TRAIT = trait_robot_luxurious COST = -2 }
 				}
-				]
 				if = {
 					limit = {
 						can_add_synth_leader_traits = yes
@@ -1809,40 +1814,220 @@ robot_micromanage_add_negatives = {
 					}
 					robot_micromanage_add_trait = { TRAIT = trait_robot_uncanny COST = -1 }
 				}
-				[[ !ADDING_trait_robot_double_jointed ]
 				if = {
 					limit = {
 						NOT = { pop_has_trait = trait_robot_bulky }
 						NOT = { pop_has_trait = trait_robot_double_jointed }
+						NOT = { has_pop_flag = ADDING_trait_robot_double_jointed }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
 					robot_micromanage_add_trait = { TRAIT = trait_robot_bulky COST = -1 }
 				}
-				]
-				[[ !ADDING_trait_robot_mass_produced ]
 				if = {
 					limit = {
 						NOT = { pop_has_trait = trait_robot_custom_made }
 						NOT = { pop_has_trait = trait_robot_mass_produced }
+						NOT = { has_pop_flag = ADDING_trait_robot_mass_produced }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
 					robot_micromanage_add_trait = { TRAIT = trait_robot_custom_made COST = -1 }
 				}
-				]
-				[[ !ADDING_trait_robot_durable ]
 				if = {
 					limit = {
 						NOT = { pop_has_trait = trait_robot_high_maintenance }
 						NOT = { pop_has_trait = trait_robot_durable }
+						NOT = { has_pop_flag = ADDING_trait_robot_durable }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
 					robot_micromanage_add_trait = { TRAIT = trait_robot_high_maintenance COST = -1 }
 				}
-				]
 			}
 		}
 	}
 	
+}
+
+robot_micromanage_add_single_negative = {
+	if = {
+		limit = {
+			can_add_synth_leader_traits = yes
+			NOT = { pop_has_trait = trait_robot_repurposed_hardware }
+			NOT = { pop_has_trait = trait_robot_learning_algorithms }
+		}
+		robot_micromanage_add_trait = { TRAIT = trait_robot_repurposed_hardware COST = -1 }
+	}
+	else_if = {
+		limit = {
+			is_species_class = MACHINE
+			NOT = { pop_has_trait = trait_robot_uncanny }
+			NOT = { pop_has_trait = trait_robot_emotion_emulators }
+			pop_job_produces_amenities = no
+		}
+		robot_micromanage_add_trait = { TRAIT = trait_robot_uncanny COST = -1 }
+	}
+	else_if = {
+		limit = {
+			NOT = { pop_has_trait = trait_robot_bulky }
+			NOT = { pop_has_trait = trait_robot_double_jointed }
+			NOT = { has_pop_flag = ADDING_trait_robot_double_jointed }
+		}
+		robot_micromanage_add_trait = { TRAIT = trait_robot_bulky COST = -1 }
+	}
+	else_if = {
+		limit = {
+			NOT = { pop_has_trait = trait_robot_custom_made }
+			NOT = { pop_has_trait = trait_robot_mass_produced }
+			NOT = { has_pop_flag = ADDING_trait_robot_mass_produced }
+		}
+		robot_micromanage_add_trait = { TRAIT = trait_robot_custom_made COST = -1 }
+	}
+	else_if = {
+		limit = {
+			NOT = { pop_has_trait = trait_robot_high_maintenance }
+			NOT = { pop_has_trait = trait_robot_durable }
+			NOT = { has_pop_flag = ADDING_trait_robot_durable }
+		}
+		robot_micromanage_add_trait = { TRAIT = trait_robot_high_maintenance COST = -1 }
+	}
+}
+
+robot_micromanage_swap_negatives = {
+	if = {
+		limit = {
+			check_variable = { which = available_trait_picks value > 0 }
+		}
+		# We have extra trait picks, so swap out a two-point negative for two
+		# one-pointers if we can.
+		if = {
+			limit = {
+				OR = {
+					pop_has_trait = trait_robot_luxurious
+					pop_has_trait = trait_robot_high_bandwidth
+				}
+				calc_true_if = {
+					amount >= 2
+					AND = {
+						can_add_synth_leader_traits = yes
+						NOT = { pop_has_trait = trait_robot_repurposed_hardware }
+						NOT = { pop_has_trait = trait_robot_learning_algorithms }
+					}
+					AND = {
+						is_species_class = MACHINE
+						NOT = { pop_has_trait = trait_robot_uncanny }
+						NOT = { pop_has_trait = trait_robot_emotion_emulators }
+						pop_job_produces_amenities = no
+					}
+					AND = {
+						NOT = { pop_has_trait = trait_robot_bulky }
+						NOT = { pop_has_trait = trait_robot_double_jointed }
+					}
+					AND = {
+						NOT = { pop_has_trait = trait_robot_custom_made }
+						NOT = { pop_has_trait = trait_robot_mass_produced }
+					}
+					AND = {
+						NOT = { pop_has_trait = trait_robot_high_maintenance }
+						NOT = { pop_has_trait = trait_robot_durable }
+					}
+				}
+			}
+			# We should be able to swap.
+			if = {
+				limit = { pop_has_trait = trait_robot_luxurious }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					remove_trait = trait_robot_luxurious
+				}
+				subtract_variable = { which = available_trait_points value = 2 }
+				change_variable = { which = available_trait_picks value = 1 }
+				robot_micromanage_add_single_negative = yes
+				if = {
+					limit = { check_variable = { which = available_trait_points value < 0 } }
+					robot_micromanage_add_single_negative = yes
+				}
+			}
+			else_if = {
+				limit = { pop_has_trait = trait_robot_high_bandwidth }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					remove_trait = trait_robot_high_bandwidth
+				}
+				subtract_variable = { which = available_trait_points value = 2 }
+				change_variable = { which = available_trait_picks value = 1 }
+				robot_micromanage_add_single_negative = yes
+				if = {
+					limit = { check_variable = { which = available_trait_points value < 0 } }
+					robot_micromanage_add_single_negative = yes
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			check_variable = { which = available_trait_points value > 0 }
+		}
+		# We have extra trait points, so swap a negative two-pointer for a one-pointer.
+		# We could also remove one-pointers, but we should never end up with single
+		# point negatives if we have extra points.
+		if = {
+			limit = {
+				OR = {
+					pop_has_trait = trait_robot_luxurious
+					pop_has_trait = trait_robot_high_bandwidth
+				}
+				OR = {
+					AND = {
+						can_add_synth_leader_traits = yes
+						NOT = { pop_has_trait = trait_robot_repurposed_hardware }
+						NOT = { pop_has_trait = trait_robot_learning_algorithms }
+					}
+					AND = {
+						is_species_class = MACHINE
+						NOT = { pop_has_trait = trait_robot_uncanny }
+						NOT = { pop_has_trait = trait_robot_emotion_emulators }
+						pop_job_produces_amenities = no
+					}
+					AND = {
+						NOT = { pop_has_trait = trait_robot_bulky }
+						NOT = { pop_has_trait = trait_robot_double_jointed }
+					}
+					AND = {
+						NOT = { pop_has_trait = trait_robot_custom_made }
+						NOT = { pop_has_trait = trait_robot_mass_produced }
+					}
+					AND = {
+						NOT = { pop_has_trait = trait_robot_high_maintenance }
+						NOT = { pop_has_trait = trait_robot_durable }
+					}
+				}
+			}
+			# We should be able to swap.
+			if = {
+				limit = { pop_has_trait = trait_robot_luxurious }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					remove_trait = trait_robot_luxurious
+				}
+				subtract_variable = { which = available_trait_points value = 2 }
+				change_variable = { which = available_trait_picks value = 1 }
+				robot_micromanage_add_single_negative = yes
+			}
+			else_if = {
+				limit = { pop_has_trait = trait_robot_high_bandwidth }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					remove_trait = trait_robot_high_bandwidth
+				}
+				subtract_variable = { which = available_trait_points value = 2 }
+				change_variable = { which = available_trait_picks value = 1 }
+				robot_micromanage_add_single_negative = yes
+			}
+		}
+	}
 }
 
 robot_micromanage_try_add = {
@@ -1851,7 +2036,9 @@ robot_micromanage_try_add = {
 			NOT = { has_trait = $TRAIT$ }
 		}
 		# Add negatives if needed.
-		robot_micromanage_add_negatives = { WANT = $COST$ ADDING_$TRAIT$ = 1 }
+		set_pop_flag = ADDING_$TRAIT$
+		robot_micromanage_add_negatives = { WANT = $COST$ }
+		remove_pop_flag = ADDING_$TRAIT$
 		if = {
 			limit = {
 				check_variable = { which = available_trait_points value >= $COST$ }
@@ -1985,5 +2172,10 @@ robot_micromanage_pop = {
 			}
 			robot_micromanage_add_traits = yes
 		}
+
+		# Swap negative traits if we have extra picks.
+		robot_micromanage_swap_negatives = yes
+
+		gene_micromanage_cleanup = yes
 	}
 }

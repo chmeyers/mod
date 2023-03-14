@@ -51,6 +51,26 @@ edict_organic_pop_size_effect = {
 	base = 0.333 # 40 unity cost / 120 months
 	mult = value:genemod_num_organic_pops
 	add = value:edict_startup_cost_effect
+	modifier = {
+		factor = 0.5
+		has_tradition = tr_genetics_retrovirus
+	}
+	modifier = {
+		factor = 0.5
+		has_tradition = tr_cybernetics_modular_cybernetics
+	}
+}
+
+organic_species_modification_mult = {
+	base = 1
+	modifier = {
+		factor = 0.5
+		has_tradition = tr_genetics_retrovirus
+	}
+	modifier = {
+		factor = 0.5
+		has_tradition = tr_cybernetics_modular_cybernetics
+	}
 }
 
 micromanager_pops_per_month = {
@@ -113,6 +133,18 @@ edict_robotic_pop_size_effect = {
 	base = 0.233 # 28 unity cost / 120 months
 	mult = value:genemod_num_robotic_pops
 	add = value:edict_robotic_startup_cost_effect
+	modifier = {
+		factor = 0.5
+		has_tradition = tr_synthetics_prefabricated_components
+	}
+}
+
+robotic_species_modification_mult = {
+	base = 1
+	modifier = {
+		factor = 0.5
+		has_tradition = tr_synthetics_prefabricated_components
+	}
 }
 
 micromanager_robotic_pops_per_month = {

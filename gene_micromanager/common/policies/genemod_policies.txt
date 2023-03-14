@@ -240,7 +240,7 @@ leader_enhancement = {
 	}
 
 	option = {
-		name = "leader_enhancement_custom_synthetics"
+		name = "leader_enhancement_custom_robots"
 
 		policy_flags = {
 			# Robotic Enhancement doesn't count as Capacity Booster for GalCom purposes,
