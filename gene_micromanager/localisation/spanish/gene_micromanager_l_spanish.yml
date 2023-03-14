@@ -1,0 +1,38 @@
+﻿l_spanish:
+leader_enhancement_custom_genesculpting:0 "Genescultura personalizada"
+leader_enhancement_custom_genesculpting_name:0 "Genescultura personalizada"
+leader_enhancement_custom_genesculpting_desc:0 "Los líderes se someterán a una modificación genética personalizada para proporcionar los rasgos genéticos óptimos. Si se elimina esta política, los líderes existentes volverán a los rasgos principales de su especie."
+
+leader_enhancement_custom_cybernetics:0 "Cibernética personalizada"
+leader_enhancement_custom_cybernetics_name:0 "Cibernética personalizada"
+leader_enhancement_custom_cybernetics_desc:0 "Los líderes recibirán una modificación cibernética diseñada personalmente, así como algunas mejoras genéticas personalizadas para proporcionar los rasgos óptimos. Si se elimina esta política, los líderes existentes volverán a los rasgos principales de su especie."
+
+leader_enhancement_custom_psionics:0 "Mejora psiónica enfocada"
+leader_enhancement_custom_psionics_name:0 "Mejora psiónica enfocada"
+leader_enhancement_custom_psionics_desc:0 "Los líderes recibirán una modificación psiónica diseñada personalmente, así como algunas mejoras genéticas personalizadas para proporcionar los rasgos óptimos. Si se elimina esta política, los líderes existentes volverán a los rasgos principales de su especie."
+
+leader_enhancement_custom_robots:0 "Liderazgo de máquinas optimizado"
+leader_enhancement_custom_robots_name:0 "Liderazgo de máquinas optimizado"
+leader_enhancement_custom_robots_desc:0 "Los líderes sintéticos recibirán una robomodificación personalizada para garantizar que tengan los mejores rasgos para liderar. Como máquinas inmortales, realmente no hay mucho que hacer, sin embargo."
+
+leader_enhancement_custom_cybergenetics:0 "Cibrogenética personalizada"
+leader_enhancement_custom_cybergenetics_name:0 "Cibrogenética personalizada"
+leader_enhancement_custom_cybergenetics_desc:0 "Los líderes se someterán a una mejora cibernética y modificación genética personalizada para proporcionar los rasgos óptimos. Si se elimina esta política, los líderes existentes volverán a los rasgos principales de su especie."
+
+leader_enhancement_custom_psigenetics:0 "Psi-genética personalizada"
+leader_enhancement_custom_psigenetics_name:0 "Psi-genética personalizada"
+leader_enhancement_custom_psigenetics_desc:0 "Los líderes se someterán a una mejora psiónica enfocada y modificación genética personalizada para proporcionar los rasgos óptimos. Si se elimina esta política, los líderes existentes volverán a los rasgos principales de su especie."
+
+leader_enhancement_custom_cyberpsionics:0 "Genocamuflaje personalizado"
+leader_enhancement_custom_cyberpsionics_name:0 "Genocamuflaje personalizado"
+leader_enhancement_custom_cyberpsionics_desc:0 "Los líderes se someterán a una mejora psiónica enfocada y cibernética personalizada para proporcionar los rasgos óptimos. Si se elimina esta política, los líderes existentes volverán a los rasgos principales de su especie."
+
+leader_enhancement_custom_psicybergenetics:0 "Personalización total"
+leader_enhancement_custom_psicybergenetics_name:0 "Personalización total"
+leader_enhancement_custom_psicybergenetics_desc:0 "Los líderes se someterán a una mejora psiónica enfocada, personalización cibernética y mejora genética para proporcionar rasgos óptimos. Si esta política se elimina, los líderes existentes volverán a los rasgos principales de su especie."
+
+edict_gene_micromanager:0 "Gestor de rasgos biológicos"
+edict_gene_micromanager_desc:0 "Las poblaciones serán modificadas automáticamente para optimizarlas para el trabajo que estén realizando, respetando los límites máximos de rasgos y las limitaciones de tecnología investigada. Los rasgos genéticos/cibernéticos solo se agregarán/eliminarán si se ha desbloqueado la ascensión asociada. Cada población será evaluada aproximadamente una vez por década. La habitabilidad se cambiará para que coincida con el planeta en el que viven si se ha investigado la aclimatación glandular y esto mejoraría su habitabilidad. Ciertos rasgos de habitabilidad raros, como la habitabilidad en Tumbas o Hábitats, no se eliminarán automáticamente. No se tocarán los rasgos de otros caminos de ascenso, como los psiónicos."
+
+edict_robotic_micromanager:0 "Gestor de rasgos de máquina"
+edict_robotic_micromanager_desc:0 "Las poblaciones sintéticas se modificarán automáticamente para optimizarlas para el trabajo que estén realizando, respetando los límites máximos de rasgos y las limitaciones de tecnología investigada. Los rasgos solo se agregarán o eliminarán si se cuenta con la tecnología adecuada."

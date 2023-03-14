@@ -1,0 +1,38 @@
+﻿l_french:
+leader_enhancement_custom_genesculpting:0 "Génie Génétique Personnalisé"
+leader_enhancement_custom_genesculpting_name:0 "Génie Génétique Personnalisé"
+leader_enhancement_custom_genesculpting_desc:0 "Les dirigeants subiront une modification génétique personnalisée pour fournir les traits génétiques optimaux. Si cette politique est supprimée, les dirigeants existants reviendront aux traits principaux de leur espèce."
+
+leader_enhancement_custom_cybernetics:0 "Cybernétique sur Mesure"
+leader_enhancement_custom_cybernetics_name:0 "Cybernétique sur Mesure"
+leader_enhancement_custom_cybernetics_desc:0 "Les dirigeants recevront une modification cybernétique personnellement conçue ainsi qu'une modification génétique personnalisée pour fournir les traits optimaux. Si cette politique est supprimée, les dirigeants existants reviendront aux traits principaux de leur espèce."
+
+leader_enhancement_custom_psionics:0 "Amélioration Psionique Ciblée"
+leader_enhancement_custom_psionics_name:0 "Amélioration Psionique Ciblée"
+leader_enhancement_custom_psionics_desc:0 "Les dirigeants recevront une modification psionique personnellement conçue ainsi qu'une modification génétique personnalisée pour fournir les traits optimaux. Si cette politique est supprimée, les dirigeants existants reviendront aux traits principaux de leur espèce."
+
+leader_enhancement_custom_robots:0 "Dirigeantes Machinique Optimisé"
+leader_enhancement_custom_robots_name:0 "Dirigeantes Machinique Optimisé"
+leader_enhancement_custom_robots_desc:0 "Les dirigeants synthétiques recevront une robomodification personnalisée pour garantir qu'ils possèdent les meilleurs traits pour les dirigeants. En tant que machines immortelles, il n'y a pas vraiment grand-chose à faire, cependant."
+
+leader_enhancement_custom_cybergenetics:0 "Cybro-Genétique Personnalisée"
+leader_enhancement_custom_cybergenetics_name:0 "Cybro-Genétique Personnalisée"
+leader_enhancement_custom_cybergenetics_desc:0 "Les dirigeants subiront une amélioration cybernétique sur mesure et une modification génétique personnalisée pour fournir les traits optimaux. Si cette politique est supprimée, les dirigeants existants reviendront aux traits principaux de leur espèce."
+
+leader_enhancement_custom_psigenetics:0 "Génétique Psi personnalisée"
+leader_enhancement_custom_psigenetics_name:0 "Génétique Psi personnalisée"
+leader_enhancement_custom_psigenetics_desc:0 "Les dirigeants subiront une amélioration psionique ciblée et une modification génétique personnalisée pour fournir les traits optimaux. Si cette politique est supprimée, les dirigeants existants reviendront aux traits principaux de leur espèce."
+
+leader_enhancement_custom_cyberpsionics:0 "Genoensevelissement sur mesure"
+leader_enhancement_custom_cyberpsionics_name:0 "Genoensevelissement sur mesure"
+leader_enhancement_custom_cyberpsionics_desc:0 "Les dirigeants subiront une amélioration psionique ciblée et une cybernétique personnalisée pour fournir les traits optimaux. Si cette politique est supprimée, les dirigeants existants reviendront aux traits principaux de leur espèce."
+
+leader_enhancement_custom_psicybergenetics:0 "Cyberensevelissement d'ADN sur mesure"
+leader_enhancement_custom_psicybergenetics_name:0 "Cyberensevelissement d'ADN sur mesure"
+leader_enhancement_custom_psicybergenetics_desc:0 "Les dirigeants subiront une amélioration psionique ciblée, une cybernétique personnalisée et une amélioration génétique pour fournir les traits optimaux. Si cette politique est supprimée, les dirigeants existants reviendront aux traits principaux de leur espèce."
+
+edict_gene_micromanager:0 "Gestionnaire de traits biologiques"
+edict_gene_micromanager_desc:0 "Les Pops seront automatiquement modifiés pour les optimiser pour l'emploi qu'ils occupent tout en respectant les limites maximales de traits et les limitations technologiques recherchées. Les traits génétiques/cybernétiques ne seront ajoutés/supprimés que si vous avez débloqué l'ascension associée. Chaque Pop sera évalué environ une fois par décennie. L'habitabilité sera modifiée pour correspondre à la planète sur laquelle ils vivent si l'acclimatation glandulaire a été recherchée et qu'elle améliorerait leur habitabilité. Certains traits d'habitabilité rares tels que l'habitabilité de Tomb ou d'Habitat ne seront pas automatiquement supprimés. Les traits d'autres voies d'ascension, tels que le psionique, ne seront pas modifiés."
+
+edict_robotic_micromanager:0 "Gestionnaire de traits de machine"
+edict_robotic_micromanager_desc:0 "Les Pops synthétiques seront automatiquement modifiés pour les optimiser pour l'emploi qu'ils occupent tout en respectant les limites maximales de traits et les limitations technologiques recherchées. Les traits ne seront ajoutés ou supprimés que si vous disposez de la technologie appropriée."
