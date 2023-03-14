@@ -33,6 +33,7 @@ pop_job_produces_amenities = {
 		has_job = crucible_drone
 		has_job = evaluator
 		has_job = chronicle_drone
+		has_job = xeno_zoo_keeper
 
 		#with agrarian idyll: pearl_diver, farmer, angler
 		# if materialist: culture worker and death chronicler
