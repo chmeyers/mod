@@ -1655,7 +1655,20 @@ robot_micromanage_add_negatives = {
 					NOT = { pop_has_trait = trait_robot_repurposed_hardware }
 					NOT = { pop_has_trait = trait_robot_learning_algorithms }
 				}
-				robot_micromanage_add_trait = { TRAIT = trait_robot_repurposed_hardware COST = -1 }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					add_trait = trait_robot_repurposed_hardware
+				}
+				subtract_variable = { which = available_trait_points value = -1 }
+				subtract_variable = { which = available_trait_picks value = 1 }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					add_trait = trait_robot_repurposed_hardware
+				}
+				change_variable = { which = available_trait_points value = 1 }
+				subtract_variable = { which = available_trait_picks value = 1 }
 			}
 			else_if = {
 				limit = {
@@ -1664,7 +1677,13 @@ robot_micromanage_add_negatives = {
 					NOT = { pop_has_trait = trait_robot_emotion_emulators }
 					pop_job_produces_amenities = no
 				}
-				robot_micromanage_add_trait = { TRAIT = trait_robot_uncanny COST = -1 }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					add_trait = trait_robot_uncanny
+				}
+				change_variable = { which = available_trait_points value = 1 }
+				subtract_variable = { which = available_trait_picks value = 1 }
 			}
 			else_if = {
 				limit = {
@@ -1672,7 +1691,13 @@ robot_micromanage_add_negatives = {
 					NOT = { pop_has_trait = trait_robot_double_jointed }
 					NOT = { has_pop_flag = ADDING_trait_robot_double_jointed }
 				}
-				robot_micromanage_add_trait = { TRAIT = trait_robot_bulky COST = -1 }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					add_trait = trait_robot_bulky
+				}
+				change_variable = { which = available_trait_points value = 1 }
+				subtract_variable = { which = available_trait_picks value = 1 }
 			}
 			else_if = {
 				limit = {
@@ -1680,7 +1705,13 @@ robot_micromanage_add_negatives = {
 					NOT = { pop_has_trait = trait_robot_mass_produced }
 					NOT = { has_pop_flag = ADDING_trait_robot_mass_produced }
 				}
-				robot_micromanage_add_trait = { TRAIT = trait_robot_custom_made COST = -1 }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					add_trait = trait_robot_custom_made
+				}
+				change_variable = { which = available_trait_points value = 1 }
+				subtract_variable = { which = available_trait_picks value = 1 }
 			}
 			else_if = {
 				limit = {
@@ -1688,7 +1719,13 @@ robot_micromanage_add_negatives = {
 					NOT = { pop_has_trait = trait_robot_durable }
 					NOT = { has_pop_flag = ADDING_trait_robot_durable }
 				}
-				robot_micromanage_add_trait = { TRAIT = trait_robot_high_maintenance COST = -1 }
+				modify_species = {
+					species = this
+					change_scoped_species = yes
+					add_trait = trait_robot_high_maintenance
+				}
+				change_variable = { which = available_trait_points value = 1 }
+				subtract_variable = { which = available_trait_picks value = 1 }
 			}
 		}
 
@@ -1784,7 +1821,13 @@ robot_micromanage_add_negatives = {
 						NOT = { has_pop_flag = ADDING_trait_robot_streamlined_protocols }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
-					robot_micromanage_add_trait = { TRAIT = trait_robot_high_bandwidth COST = -2 }
+					modify_species = {
+						species = this
+						change_scoped_species = yes
+						add_trait = trait_robot_high_bandwidth
+					}
+					change_variable = { which = available_trait_points value = 2 }
+					subtract_variable = { which = available_trait_picks value = 1 }
 				}
 				if = {
 					limit = {
@@ -1793,7 +1836,13 @@ robot_micromanage_add_negatives = {
 						NOT = { has_pop_flag = ADDING_trait_robot_recycled }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
-					robot_micromanage_add_trait = { TRAIT = trait_robot_luxurious COST = -2 }
+					modify_species = {
+						species = this
+						change_scoped_species = yes
+						add_trait = trait_robot_luxurious
+					}
+					change_variable = { which = available_trait_points value = 2 }
+					subtract_variable = { which = available_trait_picks value = 1 }
 				}
 				if = {
 					limit = {
@@ -1802,7 +1851,13 @@ robot_micromanage_add_negatives = {
 						NOT = { pop_has_trait = trait_robot_learning_algorithms }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
-					robot_micromanage_add_trait = { TRAIT = trait_robot_repurposed_hardware COST = -1 }
+					modify_species = {
+						species = this
+						change_scoped_species = yes
+						add_trait = trait_robot_repurposed_hardware
+					}
+					change_variable = { which = available_trait_points value = 1 }
+					subtract_variable = { which = available_trait_picks value = 1 }
 				}
 				if = {
 					limit = {
@@ -1812,7 +1867,13 @@ robot_micromanage_add_negatives = {
 						pop_job_produces_amenities = no
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
-					robot_micromanage_add_trait = { TRAIT = trait_robot_uncanny COST = -1 }
+					modify_species = {
+						species = this
+						change_scoped_species = yes
+						add_trait = trait_robot_uncanny
+					}
+					change_variable = { which = available_trait_points value = 1 }
+					subtract_variable = { which = available_trait_picks value = 1 }
 				}
 				if = {
 					limit = {
@@ -1821,7 +1882,13 @@ robot_micromanage_add_negatives = {
 						NOT = { has_pop_flag = ADDING_trait_robot_double_jointed }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
-					robot_micromanage_add_trait = { TRAIT = trait_robot_bulky COST = -1 }
+					modify_species = {
+						species = this
+						change_scoped_species = yes
+						add_trait = trait_robot_bulky
+					}
+					change_variable = { which = available_trait_points value = 1 }
+					subtract_variable = { which = available_trait_picks value = 1 }
 				}
 				if = {
 					limit = {
@@ -1830,7 +1897,13 @@ robot_micromanage_add_negatives = {
 						NOT = { has_pop_flag = ADDING_trait_robot_mass_produced }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
-					robot_micromanage_add_trait = { TRAIT = trait_robot_custom_made COST = -1 }
+					modify_species = {
+						species = this
+						change_scoped_species = yes
+						add_trait = trait_robot_custom_made
+					}
+					change_variable = { which = available_trait_points value = 1 }
+					subtract_variable = { which = available_trait_picks value = 1 }
 				}
 				if = {
 					limit = {
@@ -1839,7 +1912,13 @@ robot_micromanage_add_negatives = {
 						NOT = { has_pop_flag = ADDING_trait_robot_durable }
 						check_variable = { which = available_trait_points value < $WANT$ }
 					}
-					robot_micromanage_add_trait = { TRAIT = trait_robot_high_maintenance COST = -1 }
+					modify_species = {
+						species = this
+						change_scoped_species = yes
+						add_trait = trait_robot_high_maintenance
+					}
+					change_variable = { which = available_trait_points value = 1 }
+					subtract_variable = { which = available_trait_picks value = 1 }
 				}
 			}
 		}
@@ -1892,6 +1971,7 @@ robot_micromanage_add_single_negative = {
 }
 
 robot_micromanage_swap_negatives = {
+	optimize_memory
 	if = {
 		limit = {
 			check_variable = { which = available_trait_picks value > 0 }
