@@ -1025,6 +1025,12 @@ gene_micromanage_add_traits = {
 		}
 		gene_micromanage_try_add = { TRAIT = trait_rapid_breeders COST = 2 }
 	}
+	# Per Steam comment by @Sayle, durable is more important for hive minds as they spend
+	# alot of their population making amenities.
+	if = {
+		limit = { pop_has_trait = trait_hive_mind }
+		gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_durable COST = 1 }
+	}
 	gene_micromanage_try_add_cyber = { TRAIT = trait_cyborg_double_jointed COST = 1 }
 	gene_micromanage_try_add_genetic = { TRAIT = trait_nomadic COST = 1 }
 	# other    trait_docile trait_conservational (trait_low_maintenance)  2 + 1 + (1)
