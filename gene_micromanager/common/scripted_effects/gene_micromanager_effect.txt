@@ -2087,7 +2087,7 @@ robot_micromanage_add_traits = {
 	if = {
 		limit = {
 			NOT = { owner = { has_authority = auth_machine_intelligence } }
-			pop_produces_resource = { type = energy amount > 0}
+			pop_produces_resource = { type = food amount > 0}
 		}
 		robot_micromanage_try_add = { TRAIT = trait_robot_harvesters COST = 2 }
 	}
