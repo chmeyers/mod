@@ -77,6 +77,7 @@ country_event = {
 			has_policy_flag = leader_enhancement_custom_genesculpting
 			has_policy_flag = leader_enhancement_custom_cybernetics
 			has_policy_flag = leader_enhancement_custom_psionics
+			has_policy_flag = leader_enhancement_custom_robots
 		}
 	}
 
@@ -86,6 +87,12 @@ country_event = {
 			genemod_enhance_leader_cybernetic = yes
 			genemod_enhance_leader_psionic = yes
 			genemod_enhance_leader_robotic = yes
+			fire_on_action = {
+				on_action = on_leader_species_changed
+				scopes = {
+					from = event_target:leader_previous_species
+				}
+			}
 		}
 		# Same thing for pool leaders
 		every_pool_leader = {
@@ -93,6 +100,12 @@ country_event = {
 			genemod_enhance_leader_cybernetic = yes
 			genemod_enhance_leader_psionic = yes
 			genemod_enhance_leader_robotic = yes
+			fire_on_action = {
+				on_action = on_leader_species_changed
+				scopes = {
+					from = event_target:leader_previous_species
+				}
+			}
 		}
 		# Set the leader erudite traits
 		country_event = { id = utopia.2508 }
