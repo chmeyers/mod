@@ -286,7 +286,7 @@ gene_micromanage_reset_habitability =  {
 			NOT = { home_planet = { is_artificial = yes } }
 			NOT = { home_planet = { is_ideal = yes } }
 			NOT = { home_planet = { is_planet_class = pc_relic } }
-			NOT = { planet = { is_planet_class = pc_nuked } }
+			NOT = { home_planet = { is_planet_class = pc_nuked } }
 			NOT = { home_planet = { is_planet_class = pc_machine } }
 			NOT = { home_planet = { is_planet_class = pc_hive } }
 			NOT = { species = { is_half_species = any } }

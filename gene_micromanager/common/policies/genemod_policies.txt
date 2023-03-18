@@ -6,6 +6,10 @@ leader_enhancement = {
 			has_technology = tech_selected_lineages
 			has_active_tradition = tr_genetics_finish
 			has_active_tradition = tr_genetics_finish_extra_traits
+			has_active_tradition = tr_synthetics_finish
+			has_active_tradition = tr_synthetics_finish_machine
+			has_active_tradition = tr_cybernetics_finish
+			has_active_tradition = tr_psionics_finish
 		}
 	}
 
